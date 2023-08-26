@@ -1,0 +1,17 @@
+Stripe -> Con user abstracto
+Iconos -> Box Icons imagenes estaticas
+Framework Css -> Boostrapt
+Javascript/Jquery(estatico)
+
+- Imagenes de productos
+- Uso de Git
+- Uso .ENV (variables de entorno)
+- BBDD Postgress
+- Uso de señales o sobreescritura metodo Save
+- Uso de administrador de Modelo
+- Uso de administrador de queryset
+- NO HARDCODING
+- Españolizar proyecto Coding POint 
+- Uso de APP_NAME
+
+- Voy por capitulo 15
