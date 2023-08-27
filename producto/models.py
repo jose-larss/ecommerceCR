@@ -19,6 +19,10 @@ class Producto(models.Model):
         return self.precio
     
 
+class ProductoImagenManager(models.Manager):
+    def fotoActivaPresentada(self):
+        return super(ProductoImagenManager, self).filter(active=True, presentada=True)
+
 class ProductoImagen(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to="productos/imagenes")
@@ -26,6 +30,8 @@ class ProductoImagen(models.Model):
     miniatura = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = ProductoImagenManager()
 
     class Meta:
         verbose_name = "Producto Imagen"

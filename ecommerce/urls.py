@@ -19,11 +19,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import home
+from producto.views import all_products
 
 urlpatterns = [
+    path('', all_products, name="all_products"),
     path('admin/', admin.site.urls),
-    path('', home, name="home"),
     path('producto/', include('producto.urls')),
 ]
 if settings.DEBUG:

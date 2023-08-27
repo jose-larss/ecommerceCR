@@ -8,4 +8,4 @@ def all_products(request):
     context = {
         "productos": productos,
     }
-    return render(request, "productos/all_products.html", context)
+    return render(request, "productos/all_productos.html", context)
