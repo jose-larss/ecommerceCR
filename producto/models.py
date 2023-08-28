@@ -1,5 +1,10 @@
 from django.db import models
 
+
+class ProductoManager(models.Manager):
+    def productosActivos(self):
+        return super(ProductoManager, self).filter(active=True)
+
 class Producto(models.Model):
     titulo = models.CharField(max_length=120)
     descripcion = models.TextField(null=True, blank=True)
@@ -11,6 +16,8 @@ class Producto(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+
+    objects = ProductoManager()
 
     def __str__(self):
         return self.titulo

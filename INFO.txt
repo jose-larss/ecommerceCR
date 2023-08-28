@@ -14,4 +14,4 @@ Javascript/Jquery(estatico)
 - Españolizar proyecto Coding POint 
 - Uso de APP_NAME
 
-- Voy por capitulo 15
+- Voy por capitulo 15/16

@@ -4,45 +4,34 @@
 
 
 {% block content %}
-    <br>
     <div class="row">
-        {% for producto in productos %}
-            {% if producto.active %}
-                <div class="col-3">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            {% if producto.productoimagen_set.fotoActivaPresentada %}
-                                {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
-                                    <div class="col-md-4">
-                                        <img src="{{foto.imagen.url}}" class="img-fluid rounded-start" alt="{{producto.titulo}}">
-                                    </div>
-                                {% endfor  %}
-                            {% else %}
-                                <div class="col-md-4">
-                                    <img src="{% static 'img/placeholder.png' %}" class="img-fluid rounded-start" alt="">
-                                </div>
-                            {% endif %}
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                <h5 class="card-title">{{producto.titulo|title}}</h5>
-                                <p class="card-text">{{producto.descripcion|truncatewords:15}}</p>
-                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        {% for producto in productos %}  
+            <div class="col-3" style="margin-top: 10px;">
+                <div class="card" style="width: 18rem;">
+           
+                    {% if producto.productoimagen_set.fotoActivaPresentada %}
+                        {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
+                            <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{producto.titulo}}" height="200px">    
+                        {% endfor  %}
+                    {% else %}
+                        <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="" height="200px">
+                    {% endif %}
+                    <div class="card-body">
+                        
+                        <h5 class="card-title">{{producto.titulo|title}}</h5>
+                        <p class="card-text">{{producto.descripcion|truncatewords:5}}</p>
+                        <p class="card-text"><small class="text-body-secondary"><b>{{producto.precio}} €</b></small></p>
+                        
+                    </div>        
                 </div>
-            {% endif %}
+            </div>
+        
         {% endfor %}
     </div>
 
-    
-   
-        
-        
-   
-{% endblock content %}
+    {% include 'componentes/paginador.html' %}
 
+{% endblock content %}
 
 
 {% block javascript/jquery %}
