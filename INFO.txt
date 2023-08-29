@@ -6,7 +6,7 @@ Javascript/Jquery(estatico)
 - Imagenes de productos
 - Uso de Git
 - Uso .ENV (variables de entorno)
-- BBDD Postgress
+- BBDD Postgress - Hecho
 - Uso de señales o sobreescritura metodo Save
 - Uso de administrador de Modelo
 - Uso de administrador de queryset
@@ -14,4 +14,6 @@ Javascript/Jquery(estatico)
 - Españolizar proyecto Coding POint 
 - Uso de APP_NAME
 
-- Voy por capitulo 15/16
+- Hacer errores personalizados 404 y 500
+
+- Voy por capitulo 20

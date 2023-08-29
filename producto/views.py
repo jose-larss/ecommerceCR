@@ -1,7 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 
 from producto.models import Producto
+
+
+def single(request, slug):
+    producto = get_object_or_404(Producto, slug=slug)
+    
+    context={"producto":producto}
+    return render(request, "productos/single.html", context)
 
 
 def all_products(request):

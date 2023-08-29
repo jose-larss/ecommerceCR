@@ -1,3 +1,5 @@
+from django.urls import reverse
+
 from django.db import models
 
 
@@ -12,21 +14,27 @@ class Producto(models.Model):
     #Este campo me da que nunca lo uso
     #precio_venta = models.DecimalField(decimal_places=2, max_digits=100,\
     #                                                        null=True, blank=True)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
 
     objects = ProductoManager()
 
+    class Meta:
+        unique_together = ['titulo', 'slug']
+
     def __str__(self):
         return self.titulo
     
-    def get_precio(self):
-        return self.precio
+    def get_absolute_url(self):
+        return reverse("producto:single_producto", kwargs={'slug':self.slug})
     
 
 class ProductoImagenManager(models.Manager):
+    def fotoActivaNoPresentada(self):
+        return super(ProductoImagenManager, self).filter(active=True, presentada=False)
+
     def fotoActivaPresentada(self):
         return super(ProductoImagenManager, self).filter(active=True, presentada=True)
 
