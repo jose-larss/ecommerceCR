@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from producto.models import Producto, ProductoImagen
-
+from producto.models import Producto, ProductoImagen, Categoria
 
 class ProductoImagenAdmin(admin.ModelAdmin):
     #search_fields = [""]
@@ -20,6 +19,21 @@ class ProductoImagenInline(admin.TabularInline):
     readonly_fields = ["updated"]
 
 
+class CategoriaAdmin(admin.ModelAdmin):
+    date_hierarchy = "timestamp"
+    search_fields = ["titulo", "descripcion"]
+    list_display = ["titulo", "presentada", "active"]
+    list_editable = ["presentada", "active"]
+    list_filter = ["active"]
+    readonly_fields = ["timestamp", "updated"]
+    prepopulated_fields = {'slug':["titulo"]}
+    ordering = ["titulo"]
+
+    class Meta:
+        model = Categoria
+    
+
+
 class ProductoAdmin(admin.ModelAdmin):
     inlines = [ProductoImagenInline]
     date_hierarchy = "timestamp"
@@ -36,4 +50,5 @@ class ProductoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Producto, ProductoAdmin)
+admin.site.register(Categoria, CategoriaAdmin)
 #admin.site.register(ProductoImagen, ProductoImagenAdmin)

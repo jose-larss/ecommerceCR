@@ -1,19 +1,18 @@
 <nav aria-label="..." style="margin-top: 10px;">
     <ul class="pagination justify-content-center">
-        
         {% if productos.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page=1" style="color:black;">Primera</a>
+                <a class="page-link" href="?{{path_categoria}}&page=1" style="color:black;">Primera</a>
             </li>
 
             <li class="page-item">
-                <a class="page-link" href="?page={{productos.previous_page_number}}">Previous</a>
+                <a class="page-link" href="?{{path_categoria}}&page={{productos.previous_page_number}}">Previous</a>
             </li>
         {% endif %}
         
         {% for pagina in paginas %}
             <li class="page-item{% if pagina_actual == pagina %} active {% endif %}" aria-current="page">
-                <a class="page-link" href="?page={{pagina}}">{{pagina}}</a>
+                <a class="page-link" href="?{{path_categoria}}&page={{pagina}}">{{pagina}}</a>
             </li>
         {% endfor %}
         

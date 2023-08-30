@@ -15,33 +15,47 @@
             box-shadow: 6px 8px 8px gray;
             cursor: pointer;
         }
-
+        #li_resaltado_sidebar:hover{
+            transition: all 400ms;
+            background: blue;
+            box-shadow: 6px 8px 8px gray;
+            cursor: pointer;            
+        }
     </style>
+{{request.get_full_path}}
     <div class="row">
-        {% for producto in productos %}  
-            <div class="col-3" style="margin-top: 10px;">
-                <a href="{{producto.get_absolute_url}}" id="a_resaltado">
-                    <div class="card" style="width: 18rem;" id="div_resaltado">
-            
-                        {% if producto.productoimagen_set.fotoActivaPresentada %}
-                            {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
-                                <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{producto.titulo}}" height="200px">    
-                            {% endfor  %}
-                        {% else %}
-                            <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="" height="200px">
-                        {% endif %}
-                        <div class="card-body">
-                            
-                            <h5 class="card-title">{{producto.titulo|title}}</h5>
-                            <p class="card-text">{{producto.descripcion|truncatewords:5}}</p>
-                            <p class="card-text"><small class="text-body-secondary"><b>{{producto.precio}} €</b></small></p>
-                            
-                        </div>        
+        <div class="col-3">
+            {% include 'componentes/sidebar.html' %}
+        </div>
+        <div class="col-9">
+            <div class="row">
+                {% for producto in productos %}  
+                    <div class="col-4" style="margin-top: 10px;">
+                        <a href="{{producto.get_absolute_url}}" id="a_resaltado">
+                            <div class="card" style="width: 18rem;" id="div_resaltado">
+                    
+                                {% if producto.productoimagen_set.fotoActivaPresentada %}
+                                    {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
+                                        <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{producto.titulo}}" height="200px">    
+                                    {% endfor  %}
+                                {% else %}
+                                    <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="" height="200px">
+                                {% endif %}
+                                <div class="card-body">
+                                    
+                                    <h5 class="card-title">{{producto.titulo|title}}</h5>
+                                    <p class="card-text">{{producto.descripcion|truncatewords:5}}</p>
+                                    <p class="card-text"><small class="text-body-secondary"><b>{{producto.precio}} €</b></small></p>
+                                    
+                                </div>        
+                            </div>
+                        </a>
                     </div>
-                </a>
+                {% endfor %}
             </div>
-        
-        {% endfor %}
+
+        </div>
+
     </div>
 
     {% include 'componentes/paginador.html' %}

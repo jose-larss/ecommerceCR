@@ -1,0 +1,26 @@
+<main class="d-flex flex-nowrap" style="margin-top: 10px;">
+    
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            
+            <span class="fs-4">Categoría</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            
+            {% for categoria in categorias %}
+                
+                <li class="nav-item" id="li_resaltado_sidebar">
+                    <a href="{% url 'producto:all'%}?categoria={{categoria.slug}}" class="nav-link" aria-current="page" style="color: aliceblue;">
+                        {{categoria.titulo|title}}
+                    </a>
+                </li>
+
+            {% endfor %}
+        
+        </ul>
+        <hr>
+
+    </div>
+
+</main>

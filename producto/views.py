@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 
-from producto.models import Producto
+from producto.models import Producto, Categoria
 
 
 def single(request, slug):
@@ -12,7 +12,12 @@ def single(request, slug):
 
 
 def all_products(request):
-    productos = Producto.objects.productosActivos().order_by('titulo')
+    try:
+        slug = request.GET.get('categoria')
+    except:
+        slug = None
+    productos = Producto.objects.filtrar(slug=slug)   
+    categorias = Categoria.objects.categoriasActivas()
 
     paginator = Paginator(productos,6)
     pagina = request.GET.get('page',1)
@@ -23,6 +28,7 @@ def all_products(request):
     context = {
         "productos": productos_paginados,
         'paginas': paginas,
-        'pagina_actual':pagina_actual
+        'pagina_actual':pagina_actual,
+        'categorias':categorias
     }
     return render(request, "productos/all_productos.html", context)

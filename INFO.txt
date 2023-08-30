@@ -15,5 +15,6 @@ Javascript/Jquery(estatico)
 - Uso de APP_NAME
 
 - Hacer errores personalizados 404 y 500
+- Implementar y verlo como productos similares
 
 - Voy por capitulo 20
