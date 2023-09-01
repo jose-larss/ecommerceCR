@@ -30,7 +30,10 @@ class ProductoQueryset(models.QuerySet):
         if slug is None:
             return self.filter(active=True, categoria=5)
         categoria = Categoria.objects.get(slug=slug)
-        return self.filter(active=True, categoria=categoria)    
+        return self.filter(active=True, categoria=categoria)  
+
+    def productosCategoriaExcluyendo1(self, categoria, id):
+        return self.filter(categoria=categoria, active=True).exclude(id=id)  
 
 class ProductoManager(models.Manager):
     def get_queryset(self):
@@ -39,6 +42,8 @@ class ProductoManager(models.Manager):
     def filtrar(self, slug = None):
         return self.get_queryset().productosActivosxcategoria(slug=slug)
 
+    def filtrar2(self, categoria, id):
+        return self.get_queryset().productosCategoriaExcluyendo1(categoria, id)
 
 class Producto(models.Model):
     titulo = models.CharField(max_length=120)

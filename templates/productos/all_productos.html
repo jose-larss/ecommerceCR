@@ -5,15 +5,15 @@
 
 {% block content %}
     <style>
-
-        #a_resaltado{
+        .a_resaltado{
             text-decoration: none;
             color: black;
         }
-        #div_resaltado:hover{
+        .div_resaltado:hover{
             transition: all 400ms;
             box-shadow: 6px 8px 8px gray;
             cursor: pointer;
+            color: darksalmon;
         }
         #li_resaltado_sidebar:hover{
             transition: all 400ms;
@@ -22,7 +22,6 @@
             cursor: pointer;            
         }
     </style>
-{{request.get_full_path}}
     <div class="row">
         <div class="col-3">
             {% include 'componentes/sidebar.html' %}
@@ -31,8 +30,8 @@
             <div class="row">
                 {% for producto in productos %}  
                     <div class="col-4" style="margin-top: 10px;">
-                        <a href="{{producto.get_absolute_url}}" id="a_resaltado">
-                            <div class="card" style="width: 18rem;" id="div_resaltado">
+                        <a href="{{producto.get_absolute_url}}" class="a_resaltado">
+                            <div class="card div_resaltado" style="width: 18rem;" >
                     
                                 {% if producto.productoimagen_set.fotoActivaPresentada %}
                                     {% for foto in producto.productoimagen_set.fotoActivaPresentada %}

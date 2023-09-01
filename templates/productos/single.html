@@ -4,21 +4,42 @@
 {% block title %}{{producto.titulo|title}}{% endblock title %}
 
 {% block content %}
-
+    <style>
+       
+        .a_resaltado{
+            text-decoration: none;
+            color: black;
+        }
+        .div_resaltado:hover{
+            transition: all 400ms;
+            box-shadow: 6px 8px 8px gray;
+            cursor: pointer;
+            color: darksalmon;
+        }
+     
+    </style>
     <div class="row">
         <div class="col-2">
-            {% for foto in producto.productoimagen_set.fotoActivaNoPresentada %}
-                <div class="card" style="margin-top: 10px;">
-                    <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{foto.titulo}}">
-                </div>
-            {% endfor %}
+            {% if producto.productoimagen_set.fotoActivaNoPresentada %}
+                {% for foto in producto.productoimagen_set.fotoActivaNoPresentada %}
+                    <div class="card" style="margin-top: 10px;">
+                        <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{foto.titulo}}">
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="col-6">
-            {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
+            {% if producto.productoimagen_set.fotoActivaPresentada %}
+                {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
+                    <div class="card mb-3" style="margin-top: 10px;">
+                        <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{foto.nombre}}">
+                    </div>
+                {% endfor %}
+            {% else %}
                 <div class="card mb-3" style="margin-top: 10px;">
-                    <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{foto.nombre}}">
+                    <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="" height="600px">
                 </div>
-            {% endfor %}
+            {% endif %}
         </div>
         <div class="col-4">
             <div class="card mb-3" style="margin-top: 10px;">
@@ -29,6 +50,33 @@
                 </div>
             </div>
         </div>
+    </div>
+    <br>
+    <h1>Artículos similares</h1>
+    <div class="row">
+        
+        {% for producto in related_productos %}
+            
+            <div class="card div_resaltado" style="width: 13rem; margin-left:10px">
+                <a href="{{producto.get_absolute_url}}" class="a_resaltado">
+                    {% if producto.productoimagen_set.fotoActivaPresentada %}
+                        {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
+                            <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{producto.titulo}}">
+                        {% endfor %}
+                    {% else %}
+                        <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="" height="200px">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{producto.titulo|title}}</h5>
+                        <p class="card-text">{{producto.descripcion|truncatewords:5}}</p>
+                        <p class="card-text"><b>{{producto.precio}} €</b></p>
+                    </div>
+                </a>
+            </div>
+            
+        {% endfor %}
+       
+
     </div>
 
 {% endblock content %}

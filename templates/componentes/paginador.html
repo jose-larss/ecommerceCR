@@ -18,10 +18,10 @@
         
         {% if productos.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{productos.next_page_number}}">Next</a>
+                <a class="page-link" href="?{{path_categoria}}&page={{productos.next_page_number}}">Next</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{productos.paginator.num_pages}}">Última</a>
+                <a class="page-link" href="?{{path_categoria}}&page={{productos.paginator.num_pages}}">Última</a>
             </li>
         {% endif %}
     </ul>

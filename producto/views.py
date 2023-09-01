@@ -1,3 +1,5 @@
+import random
+from itertools import chain
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 
@@ -6,12 +8,25 @@ from producto.models import Producto, Categoria
 
 def single(request, slug):
     producto = get_object_or_404(Producto, slug=slug)
+    categoria_producto = producto.categoria.all().first()
+    #productos_all_related = Producto.objects.filter(categoria=categoria_producto, active=True).exclude(id=producto.id)
+    productos_all_related = Producto.objects.filtrar2(categoria_producto, producto.id)
+    lista_productos_all_related = [x for x in list(productos_all_related)]
+    """
+    Esto es lo mismo que la lista comprimida de arriba
+    lista_productos_all_related = []
+    for item in productos_all_related:
+        lista_productos_all_related.append(item)
+    """
+    random.shuffle(lista_productos_all_related)
     
-    context={"producto":producto}
+    context={"producto":producto,
+             "related_productos":lista_productos_all_related[0:6]}
     return render(request, "productos/single.html", context)
 
 
 def all_products(request):
+    #La primera vez que carga esta vista es NONE
     try:
         slug = request.GET.get('categoria')
     except:
