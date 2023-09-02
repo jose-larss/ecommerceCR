@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Busqueda {% endblock title %}
+
+{% block content %}
+    <style>
+        .a_resaltado{
+            text-decoration: none;
+            color: black;
+        }
+        .div_resaltado:hover{
+            transition: all 400ms;
+            box-shadow: 6px 8px 8px gray;
+            cursor: pointer;
+            color: darksalmon;
+        }
+        #li_resaltado_sidebar:hover{
+            transition: all 400ms;
+            background: blue;
+            box-shadow: 6px 8px 8px gray;
+            cursor: pointer;            
+        }
+    </style>
+    <div class="row">
+        <div class="col-3">
+            {% include 'componentes/sidebar.html' %}
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <h1>Has buscado '{{query}}'</h1>
+                <h3>Revisa la ortografia o usa otro terminos</h3>
+                {{productos}}
+                {% for producto in productos %}  
+                    <div class="col-4" style="margin-top: 10px;">
+                        <a href="{{producto.get_absolute_url}}" class="a_resaltado">
+                            <div class="card div_resaltado" style="width: 18rem;" >
+                    
+                                {% if producto.productoimagen_set.fotoActivaPresentada %}
+                                    {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
+                                        <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{producto.titulo}}" height="200px">    
+                                    {% endfor  %}
+                                {% else %}
+                                    <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="" height="200px">
+                                {% endif %}
+                                <div class="card-body">
+                                    
+                                    <h5 class="card-title">{{producto.titulo|title}}</h5>
+                                    <p class="card-text">{{producto.descripcion|truncatewords:5}}</p>
+                                    <p class="card-text"><small class="text-body-secondary"><b>{{producto.precio}} €</b></small></p>
+                                    
+                                </div>        
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
+    {#{% include 'componentes/paginador.html' %}#}
+
+{% endblock content %}
+
+
+{% block javascript/jquery %}
+
+{% endblock javascript/jquery %}

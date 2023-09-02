@@ -22,7 +22,7 @@ class ProductoImagenInline(admin.TabularInline):
 class CategoriaAdmin(admin.ModelAdmin):
     date_hierarchy = "timestamp"
     search_fields = ["titulo", "descripcion"]
-    list_display = ["titulo", "presentada", "active"]
+    list_display = ["id","titulo", "presentada", "active"]
     list_editable = ["presentada", "active"]
     list_filter = ["active"]
     readonly_fields = ["timestamp", "updated"]

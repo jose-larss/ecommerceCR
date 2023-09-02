@@ -1,4 +1,4 @@
-from django.db.models.query import QuerySet
+from django.db.models import Q
 from django.urls import reverse
 
 from django.db import models
@@ -34,6 +34,12 @@ class ProductoQueryset(models.QuerySet):
 
     def productosCategoriaExcluyendo1(self, categoria, id):
         return self.filter(categoria=categoria, active=True).exclude(id=id)  
+    
+    def buscar(self, query=None):
+        if query is None or query == "":
+            return self.none()
+        lookups = (Q(titulo__icontains=query) | Q(descripcion__icontains=query))
+        return self.filter(lookups)
 
 class ProductoManager(models.Manager):
     def get_queryset(self):
@@ -44,6 +50,9 @@ class ProductoManager(models.Manager):
 
     def filtrar2(self, categoria, id):
         return self.get_queryset().productosCategoriaExcluyendo1(categoria, id)
+    
+    def buscar(self, query=None):
+        return self.get_queryset().buscar(query=query)
 
 class Producto(models.Model):
     titulo = models.CharField(max_length=120)
@@ -76,7 +85,9 @@ class ProductoImagenManager(models.Manager):
         return super(ProductoImagenManager, self).filter(active=True, presentada=False)
 
     def fotoActivaPresentada(self):
-        return super(ProductoImagenManager, self).filter(active=True, presentada=True)
+        return self.get_queryset().filter(active=True, presentada=True)
+        #Esto de abajo es lo mismo
+        #return super(ProductoImagenManager, self).filter(active=True, presentada=True)
 
 class ProductoImagen(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)

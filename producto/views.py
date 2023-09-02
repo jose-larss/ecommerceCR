@@ -1,10 +1,22 @@
 import random
-from itertools import chain
+#from itertools import chain
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 
 from producto.models import Producto, Categoria
 
+
+def buscar(request):
+    query = request.GET.get('q')
+    #if query is not None:
+    productos = Producto.objects.buscar(query=query)
+    categorias = Categoria.objects.categoriasActivas()
+    context = {
+        'query':query,
+        'productos':productos,
+        'categorias':categorias
+    }
+    return render(request, "productos/resultados.html", context)
 
 def single(request, slug):
     producto = get_object_or_404(Producto, slug=slug)

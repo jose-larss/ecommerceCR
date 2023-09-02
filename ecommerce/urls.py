@@ -19,12 +19,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from producto.views import all_products
+from producto.views import all_products, buscar
 
 urlpatterns = [
     path('', all_products, name="all_products"),
     path('admin/', admin.site.urls),
     path('producto/', include('producto.urls')),
+    path('s/', buscar, name="buscar"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

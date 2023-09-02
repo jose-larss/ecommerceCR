@@ -62,12 +62,20 @@
           </ul>
         </li>
         <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        
+          <form class="d-flex" role="search" action="{% url 'buscar' %}" method="get">
+            
+            <li style="margin-left: 30px;">
+              <input name="q" type="search" class="form-control form-control-dark text-bg-dark" placeholder="Buscar..."
+              aria-label="Search">
+            </li> 
+            
+            <li style="margin-left: 10px;">
+              <button type="submit" class="btn btn-outline-light me-2">Buscar</button>
+            </li>
+          </form>
+              
       </ul>
-
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-        <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-          aria-label="Search">
-      </form>
 
       <div class="text-end">
         <button type="button" class="btn btn-outline-light me-2">Login</button>
