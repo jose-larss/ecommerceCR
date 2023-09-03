@@ -17,4 +17,8 @@ Javascript/Jquery(estatico)
 - Hacer errores personalizados 404 y 500 - Hecho
 - Implementar categorias y ver que salgan productos similares - Hecho
 
+- En detalle estudiar que al clickar foto miniatura salga en centro
+- En detalle mirar si cambiar el listado de las miniaturas a active=True y miniatura = True
+- Busquedas implementar paginacion
+
 - Voy por capitulo 20

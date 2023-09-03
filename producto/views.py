@@ -7,11 +7,23 @@ from producto.models import Producto, Categoria
 
 
 def buscar(request):
+    mostrar_mensaje = True
     query = request.GET.get('q')
     #if query is not None:
     productos = Producto.objects.buscar(query=query)
+    if productos.count() == 0:
+        mostrar_mensaje = False
+        productos = Producto.objects.all()
+        productos_lista = []
+        for producto in productos:
+            productos_lista.append(producto)
+
+        random.shuffle(productos_lista)
+        productos = productos_lista
+ 
     categorias = Categoria.objects.categoriasActivas()
     context = {
+        'mostrar_mensaje':mostrar_mensaje,
         'query':query,
         'productos':productos,
         'categorias':categorias

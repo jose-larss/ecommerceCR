@@ -28,14 +28,19 @@
         </div>
         <div class="col-9">
             <div class="row">
-                <h1>Has buscado '{{query}}'</h1>
-                <h3>Revisa la ortografia o usa otro terminos</h3>
-                {{productos}}
+
+                {% if mostrar_mensaje %}
+                    <h1>Has buscado {{query}}</h1>
+                {% else %}
+                    <h1><b>Has buscado '{{query}}'</b></h1>
+                    <h3>Revisa la ortografia o usa otro terminos</h3>
+                {% endif %}
                 {% for producto in productos %}  
+                    
                     <div class="col-4" style="margin-top: 10px;">
                         <a href="{{producto.get_absolute_url}}" class="a_resaltado">
                             <div class="card div_resaltado" style="width: 18rem;" >
-                    
+                                
                                 {% if producto.productoimagen_set.fotoActivaPresentada %}
                                     {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
                                         <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{producto.titulo}}" height="200px">    
@@ -54,6 +59,7 @@
                         </a>
                     </div>
                 {% endfor %}
+
             </div>
 
         </div>
