@@ -81,7 +81,11 @@ class Producto(models.Model):
     
 
 class ProductoImagenManager(models.Manager):
+    def fotoActiva(self):
+        return super(ProductoImagenManager, self).filter(active=True).order_by('-presentada')
+    
     def fotoActivaNoPresentada(self):
+        #NO USADO
         return super(ProductoImagenManager, self).filter(active=True, presentada=False)
 
     def fotoActivaPresentada(self):

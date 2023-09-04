@@ -16,23 +16,46 @@
             cursor: pointer;
             color: darksalmon;
         }
+        .img_principal .main_img{
+            box-shadow: 0 5px 5px rgba(1,23,46,0.6);
+            
+        }
+        .contenedor_miniaturas .miniaturas{
+            opacity: 0.7;
+            transition: .3s;
+            cursor: pointer;
+        }
+        .contenedor_miniaturas .miniaturas:hover{
+            opacity: 1;
+        }
+        .activo {
+            opacity: 1 !important;
+            box-shadow: 0 5px 5px rgba(1,23,46,0.6);
+            
+        }
      
     </style>
     <div class="row">
         <div class="col-2">
-            {% if producto.productoimagen_set.fotoActivaNoPresentada %}
-                {% for foto in producto.productoimagen_set.fotoActivaNoPresentada %}
-                    <div class="card" style="margin-top: 10px;">
-                        <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{foto.titulo}}">
-                    </div>
+            {% if producto.productoimagen_set.fotoActiva %}
+                {% for foto in producto.productoimagen_set.fotoActiva %}
+                    {% if forloop.first %}
+                        <div class="card contenedor_miniaturas" style="margin-top: 10px;">
+                            <img src="{{foto.imagen.url}}" class="card-img-top miniaturas activo" alt="{{foto.titulo}}">
+                        </div>
+                    {% else %}
+                        <div class="card contenedor_miniaturas" style="margin-top: 10px;">
+                            <img src="{{foto.imagen.url}}" class="card-img-top miniaturas" alt="{{foto.titulo}}">
+                        </div>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         </div>
         <div class="col-6">
             {% if producto.productoimagen_set.fotoActivaPresentada %}
                 {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
-                    <div class="card mb-3" style="margin-top: 10px;">
-                        <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{foto.nombre}}">
+                    <div class="card mb-3 img_principal" style="margin-top: 10px;">
+                        <img src="{{foto.imagen.url}}" class="card-img-top main_img" alt="{{foto.nombre}}">
                     </div>
                 {% endfor %}
             {% else %}
@@ -83,5 +106,18 @@
 
 
 {% block javascript/jquery %}
+    <script>
+        const main_img = document.querySelector('.main_img')
+        const miniaturas = document.querySelectorAll('.miniaturas')
+
+        miniaturas.forEach(miniatura => {
+            miniatura.addEventListener('click', function(){
+                const activo = document.querySelector('.activo')
+                activo.classList.remove('activo')
+                miniatura.classList.add('activo')
+                main_img.src = miniatura.src  
+            })
+        })
+    </script>
 
 {% endblock javascript/jquery %}
