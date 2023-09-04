@@ -83,12 +83,19 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+"""
+DATABASES = {
     'default': env.db('DATABASE_URL', default='postgres:///ecomerceCR')
 }
 #Atomic_requests:  Es un concepto permite a la BBDD hacer pedidos atómicos, eso que significa? 
 # Que todo ocurre en la misma instancia en la transacción entre pedir y enviar infomación
 DATABASES['default']['ATOMIC_REQUESTS'] =True
-
+"""
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
