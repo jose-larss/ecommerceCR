@@ -22,10 +22,19 @@ def buscar(request):
         productos = productos_lista
  
     categorias = Categoria.objects.categoriasActivas()
+
+    paginator = Paginator(productos,6)
+    pagina = request.GET.get('page',1)
+    productos_paginados = paginator.get_page(pagina)
+    pagina_actual = int(pagina)
+    paginas = range(1,productos_paginados.paginator.num_pages + 1)
+
     context = {
+        'pagina_actual':pagina_actual,
+        'paginas':paginas,
+        'productos':productos_paginados,
         'mostrar_mensaje':mostrar_mensaje,
         'query':query,
-        'productos':productos,
         'categorias':categorias
     }
     return render(request, "productos/resultados.html", context)

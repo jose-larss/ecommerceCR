@@ -28,7 +28,7 @@ class Categoria(models.Model):
 class ProductoQueryset(models.QuerySet):
     def productosActivosxcategoria(self, slug=None):
         if slug is None:
-            return self.filter(active=True, categoria=5)
+            return self.filter(active=True, categoria=2)
         categoria = Categoria.objects.get(slug=slug)
         return self.filter(active=True, categoria=categoria)  
 
