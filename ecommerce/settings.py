@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     
     'django_bootstrap5',
     
+    'carro',
     'producto',
+    
 ]
 
 MIDDLEWARE = [

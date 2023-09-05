@@ -21,4 +21,4 @@ Javascript/Jquery(estatico)
 - En detalle mirar si cambiar el listado de las miniaturas a active=True y miniatura = True
 - Busquedas implementar paginacion
 
-- Voy por capitulo 20
+- Voy por capitulo 23

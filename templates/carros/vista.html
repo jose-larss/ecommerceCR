@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+    <h1>Carro</h1>
+    {% for item in carro.productos.all %}
+        {{item}}
+        {{item.precio}}
+        <br>
+    {% endfor %}
+{% endblock content %}
+
+{% block javascript/jquery %}{% endblock javascript/jquery %}

@@ -62,33 +62,101 @@
           </ul>
         </li>
         <li><a href="#" class="nav-link px-2 text-white">About</a></li>
-        
-          <form class="d-flex" role="search" action="{% url 'buscar' %}" method="get">
-            
-            <li style="margin-left: 30px;">
-              <input name="q" type="search" class="form-control form-control-dark text-bg-dark" placeholder="Buscar..."
+
+        <form class="d-flex" role="search" action="{% url 'buscar' %}" method="get">
+
+          <li style="margin-left: 30px;">
+            <input name="q" type="search" class="form-control form-control-dark text-bg-dark" placeholder="Buscar..."
               aria-label="Search">
-            </li> 
-            
-            <li style="margin-left: 10px;">
-              <button type="submit" class="btn btn-outline-light me-2">Buscar</button>
-            </li>
-          </form>
-              
+          </li>
+
+          <li style="margin-left: 10px;">
+            <button type="submit" class="btn btn-outline-light me-2">Buscar</button>
+          </li>
+        </form>
+
       </ul>
 
       <div class="text-end">
         <button type="button" class="btn btn-outline-light me-2">Login</button>
         <button type="button" class="btn btn-warning">Sign-up</button>
+
+        <a href="{% url 'carro:vista' %}" data-bs-toggle="offcanvas" aria-controls="offcanvasRight"
+          data-bs-target="#offcanvasRight" id="canvas">
+          <i class='bx bx-cart'>
+          </i>
+        </a>
+
+        <img src="{% static 'img/cart-img.png' %}" style="width: 50px;">
       </div>
       <ul>
-        <li>
 
-          <i class='bx bx-cart'></i>
-        </li>
+
+
+
       </ul>
     </div>
   </div>
+
+  <!--CANVAS-->
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="color: black;">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasRightLabel">Mi titulo</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto
+      de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la
+      imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos
+      especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos,
+      quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las
+      cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus
+      PageMaker, el cual incluye versiones de Lorem Ipsum.
+    </div>
+  </div>
 </header>
+
+<script>
+
+
+  /*
+  window.onload=function()
+
+  {
+    
+    var elemento=document.getElementById("canvas");
+
+    elemento.onmousemove = function(e) {
+
+
+      alert('aprieto boton')
+      // El contenido de esta funcion se ejecutara cuanso el mouse
+
+      // pase por encima del elemento
+
+
+
+      document.getElementById("estado").innerHTML="El ratón esta encima del recuadro";
+
+    };
+
+    elemento.onmouseout = function(e) {
+
+
+
+      // El contenido de esta funcion se ejecutara cuanso el mouse
+
+      // salga del elemento
+
+
+
+      document.getElementById("estado").innerHTML="El ratón NO esta encima del recuadro";
+
+    };
+    
+  }
+  */
+  </script>
 
 <div class="b-example-divider"></div>
