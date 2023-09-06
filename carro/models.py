@@ -10,4 +10,4 @@ class Carro(models.Model):
     activo = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"Carro id: {self.titulo}"
+        return f"Carro id: {self.id}"
