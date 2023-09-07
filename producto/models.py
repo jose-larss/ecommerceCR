@@ -79,6 +79,9 @@ class Producto(models.Model):
     def get_absolute_url(self):
         return reverse("producto:single_producto", kwargs={'slug':self.slug})
     
+    def get_carro_producto_url(self):
+        return reverse("carro:update_to_cart", kwargs={'slug':self.slug})
+    
 
 class ProductoImagenManager(models.Manager):
     def fotoActiva(self):

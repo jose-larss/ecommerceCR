@@ -11,3 +11,4 @@ class Carro(models.Model):
 
     def __str__(self):
         return f"Carro id: {self.id}"
+    

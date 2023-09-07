@@ -1,131 +1,149 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{% endblock title %}
+{% block title %}Carro{% endblock title %}
 
 {% block content %}
-  
-    <div class="row" style="margin: 10px;">
-        
-        <div class="col-8">
+    <style>
+        .a_resaltado{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+    {{carro.productos.all}}
+    {% if carro.productos.all %}
+        <div class="row" style="margin: 10px;">
             
-            <div class="card mb-3" style="max-width: 840px;">
-                <div class="row g-0">
-                    <h1 style="margin: 10px;">Tu cesta tiene </h1>
-                    {% for item in carro.productos.all %}
-                        <div class="col-md-2">
-                            {% if item.productoimagen_set.fotoActivaPresentada %}
-                                {% for imagen in item.productoimagen_set.fotoActivaPresentada %}
-                                    <img src="{{imagen.imagen.url}}" class="img-thumbnail" alt="{{item.titulo}}" 
-                                                width="200px" height="400px" style="margin: 10px;">
-                                {% endfor %}
-                            {% else %}
-                                <img src="{% static 'img/placeholder.png' %}" class="img-fluid rounded-start" alt="">
-                            {% endif %}
-                        </div>
-                        
-                        <div class="col-md-10">
-                            <div class="card-body">
-                                <table class="table table-borderless table-sm">
-                                    <tbody>
-                                    <tr>
-                                        <td><b>{{item.titulo|title}}</b></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{item.descripcion|truncatewords:8}}</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Color: rojo</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td>Talla: 43</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td>Entrega rápida:</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td>Eliminar</td>
-                                        <td>Mover a favoritos</td>
-                                        <td><b>{{item.precio}}</b></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
+            <div class="col-8">
+                
+                <div class="card mb-3" style="max-width: 840px;">
+                    <div class="row g-0">
+                        <h1 style="margin: 10px;">Tu cesta ({{msj_articulos}})</h1>
+                        {% for item in carro.productos.all %}
+                            <div class="col-md-2">
+                                {% if item.productoimagen_set.fotoActivaPresentada %}
+                                    {% for imagen in item.productoimagen_set.fotoActivaPresentada %}
+                                        <img src="{{imagen.imagen.url}}" class="img-thumbnail" alt="{{item.titulo}}" 
+                                                    width="200px" height="400px" style="margin: 10px;">
+                                    {% endfor %}
+                                {% else %}
+                                    <img src="{% static 'img/placeholder.png' %}" class="img-fluid rounded-start" alt=""  
+                                                    width="200px" height="400px" style="margin: 10px;">
+                                {% endif %}
                             </div>
-                        </div>
-                        <hr/>
-                    {% endfor %}
+                            
+                            <div class="col-md-10">
+                                <div class="card-body">
+                                    <table class="table table-borderless table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <b>{{item.titulo|title}}</b>
+                                                    <br>
+                                                    {{item.descripcion|truncatewords:8}}
+                                                    <br>
+                                                    Color: rojo
+                                                    <br>
+                                                    Talla: 43
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Entrega rápida:</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr> 
+                                                <td>
+                                                    <a href="{{item.get_carro_producto_url}}" class="a_resaltado">
+                                                        <img src="{% static 'img/icon-delete.png' %}" width="25px">
+                                                            Eliminar
+                                                    </a>
+                                                </td>
+                                                <td>Mover a favoritos</td>
+                                                <td><b>{{item.precio}}</b></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                            </div>
+                            <hr/>
+                        {% endfor %}
+                        
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="col-4">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <h1 style="margin: 10px;">Total</h1>
+                    <table class="table table-borderless" style="margin: 10px;">
+                        
+                        <tbody>
+                            <tr>
+                                <td>Subtotal</td>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <td scope="col">{{carro.total}} €</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td>Envío</td>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <td scope="col">0,00 €</td>
+                                
+                            </tr>
+                        
+                        </tbody>
+
+                        <tbody> 
+                            <tr>
+                                <th scope="col">Total (IVA incluido)</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">{{carro.total}} €</th>
+
+                            </tr>
+
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="d-grid gap-2 col-11 mx-auto">
+
+                                        <button type="button" class="btn btn-primary btn-lg">Comenzar pedido</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
                     
                 </div>
             </div>
-            
+
         </div>
-        
-        <div class="col-4">
-            <div class="card mb-3" style="max-width: 540px;">
-                <h1 style="margin: 10px;">Total</h1>
-                <table class="table table-borderless" style="margin: 10px;">
-                    
-                    <tbody>
-                        <tr>
-                            <td>Subtotal</td>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <td scope="col">29,99 €</td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <td>Envío</td>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <td scope="col">0,00 €</td>
-                            
-                        </tr>
-                    
-                    </tbody>
-
-                    <tbody> 
-                        <tr>
-                            <th scope="col">Total (IVA incluido)</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col">29,99 €</th>
-
-                        </tr>
-
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <td colspan="4">
-                                <div class="d-grid gap-2 col-11 mx-auto">
-
-                                    <button type="button" class="btn btn-primary btn-lg">Comenzar pedido</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-
-                </table>
-
+    {% else %}
+        <div class="card mb-3" style="margin: 10px; height:250px">
+           
+            <div class="card-body" style="margin:120px">
+                <h1 style="text-align: center;" class="card-title">Llena tu cesta de nuevas tendencias.</h1>
                 
+                <p class="card-text" style="text-align: center;">
+                    <button type="button" class="btn btn-outline-primary">Iniciar Sesion</button>&nbsp;&nbsp;&nbsp;
+                    <a href="{% url 'producto:all' %}" type="button" class="btn btn-primary">Volver a la tienda</a>
+
+                </p>
             </div>
         </div>
-
-    </div>
+      
+    {% endif %}
 
   
         
