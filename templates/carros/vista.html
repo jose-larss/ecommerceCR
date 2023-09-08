@@ -10,15 +10,30 @@
             color: black;
         }
     </style>
-    {{carro.productos.all}}
-    {% if carro.productos.all %}
+    
+    {% if carro_vacio %}
+        <div class="card mb-3" style="margin: 10px; height:250px">
+            
+            <div class="card-body" style="margin:120px">
+                <h1 style="text-align: center;" class="card-title">Llena tu cesta de nuevas tendencias.</h1>
+                
+                <p class="card-text" style="text-align: center;">
+                    <button type="button" class="btn btn-outline-primary">Iniciar Sesion</button>&nbsp;&nbsp;&nbsp;
+                    <a href="{% url 'producto:all' %}" type="button" class="btn btn-primary">Volver a la tienda</a>
+
+                </p>
+            </div>
+        </div>
+
+    {% else %}
+
         <div class="row" style="margin: 10px;">
             
             <div class="col-8">
                 
                 <div class="card mb-3" style="max-width: 840px;">
                     <div class="row g-0">
-                        <h1 style="margin: 10px;">Tu cesta ({{msj_articulos}})</h1>
+                        <h1 style="margin: 10px;">Tu cesta ({{msj_articulos}})</h1><a href="{% url 'carro:borrar-carro' %}">Borrar Carro</a>
                         {% for item in carro.productos.all %}
                             <div class="col-md-2">
                                 {% if item.productoimagen_set.fotoActivaPresentada %}
@@ -129,26 +144,9 @@
             </div>
 
         </div>
-    {% else %}
-        <div class="card mb-3" style="margin: 10px; height:250px">
-           
-            <div class="card-body" style="margin:120px">
-                <h1 style="text-align: center;" class="card-title">Llena tu cesta de nuevas tendencias.</h1>
-                
-                <p class="card-text" style="text-align: center;">
-                    <button type="button" class="btn btn-outline-primary">Iniciar Sesion</button>&nbsp;&nbsp;&nbsp;
-                    <a href="{% url 'producto:all' %}" type="button" class="btn btn-primary">Volver a la tienda</a>
-
-                </p>
-            </div>
-        </div>
-      
+    
     {% endif %}
 
-  
-        
-
-    
 {% endblock content %}
 
 {% block javascript/jquery %}{% endblock javascript/jquery %}

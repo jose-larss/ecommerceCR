@@ -16,9 +16,11 @@ Javascript/Jquery(estatico)
 
 - Hacer errores personalizados 404 y 500 - Hecho
 - Implementar categorias y ver que salgan productos similares - Hecho
-
 - En detalle estudiar que al clickar foto miniatura salga en centro - Hecho
 - En detalle mirar si cambiar el listado de las miniaturas a active=True y miniatura = True
-- Busquedas implementar paginacion
+- Busquedas implementar paginacion - Hecho
 
-- Voy por capitulo 23
+- Implementar que al borrar un articulo que tenga fotos sus fotos de de media se borren
+- implentar en single producto que las miniaturas salgan por miniatura = True y no como ahora fotos activas
+
+- Voy por capitulo 24
