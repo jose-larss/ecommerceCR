@@ -1,5 +1,9 @@
+import os
+import shutil
+from django.conf import settings
 from django.db.models import Q
 from django.urls import reverse
+from django.db.models.signals import pre_save
 
 from django.db import models
 
@@ -54,6 +58,7 @@ class ProductoManager(models.Manager):
     def buscar(self, query=None):
         return self.get_queryset().buscar(query=query)
 
+
 class Producto(models.Model):
     titulo = models.CharField(max_length=120)
     descripcion = models.TextField(null=True, blank=True)
@@ -75,6 +80,14 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.titulo
+     
+    def delete(self, *args, **kwargs):
+        ruta_directorio = f"productos/imagenes/{self.titulo}"
+        full_directorio = os.path.join(settings.MEDIA_ROOT, ruta_directorio)
+        if os.path.exists(full_directorio):
+            shutil.rmtree(full_directorio)
+
+        super(Producto,self).delete(*args, **kwargs)
     
     def get_absolute_url(self):
         return reverse("producto:single_producto", kwargs={'slug':self.slug})
@@ -83,9 +96,17 @@ class Producto(models.Model):
         return reverse("carro:update_to_cart", kwargs={'slug':self.slug})
     
 
+
+def comercio_directorio_fotos(intance, filename):
+    ruta_foto_nombre = f"productos/imagenes/{intance.producto.titulo}/{filename}"
+    full_path = os.path.join(settings.MEDIA_ROOT, ruta_foto_nombre)
+    if os.path.exists(full_path):
+        os.remove(full_path)
+    return ruta_foto_nombre
+
 class ProductoImagenManager(models.Manager):
-    def fotoActiva(self):
-        return super(ProductoImagenManager, self).filter(active=True).order_by('-presentada')
+    def fotoActivaMiniatura(self):
+        return super(ProductoImagenManager, self).filter(active=True, miniatura=True).order_by('-presentada')
     
     def fotoActivaNoPresentada(self):
         #NO USADO
@@ -98,7 +119,7 @@ class ProductoImagenManager(models.Manager):
 
 class ProductoImagen(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    imagen = models.ImageField(upload_to="productos/imagenes")
+    imagen = models.ImageField(upload_to=comercio_directorio_fotos)
     presentada = models.BooleanField(default=False)
     miniatura = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
@@ -112,6 +133,12 @@ class ProductoImagen(models.Model):
 
     def __str__(self):
         return self.producto.titulo
+    
+    def delete (self, *args, **kwargs):
+        print(self.imagen.path)
+        if os.path.isfile(self.imagen.path):
+            os.remove(self.imagen.path)                                  
+        super(ProductoImagen,self).delete(*args, **kwargs)
 
 
 

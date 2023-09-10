@@ -37,8 +37,8 @@
     </style>
     <div class="row">
         <div class="col-2">
-            {% if producto.productoimagen_set.fotoActiva %}
-                {% for foto in producto.productoimagen_set.fotoActiva %}
+            {% if producto.productoimagen_set.fotoActivaMiniatura %}
+                {% for foto in producto.productoimagen_set.fotoActivaMiniatura %}
                     {% if forloop.first %}
                         <div class="card contenedor_miniaturas" style="margin-top: 10px;">
                             <img src="{{foto.imagen.url}}" class="card-img-top miniaturas activo" alt="{{foto.titulo}}" height="150px">

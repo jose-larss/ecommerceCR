@@ -35,9 +35,9 @@ class ProductoAdmin(admin.ModelAdmin):
     inlines = [ProductoImagenInline]
     date_hierarchy = "timestamp"
     search_fields = ["titulo", "descripcion"]
-    list_display = ["titulo", "precio", "active", "updated"]
+    list_display = ["titulo","precio", "active", "updated"]
     list_editable = ["precio", "active"]
-    list_filter = ["precio", "active"]
+    list_filter = ["categoria","precio", "active"]
     readonly_fields = ["timestamp", "updated"]
     prepopulated_fields = {'slug': ["titulo"]}
     ordering = ["titulo"]
