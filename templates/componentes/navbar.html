@@ -30,7 +30,11 @@
       d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
   </symbol>
 </svg>
-
+<style>
+  #abrir_canvas:hover > div{
+    display: block;
+  }
+</style>
 
 <header class="p-3 text-bg-dark">
   <div class="container">
@@ -81,82 +85,34 @@
         <button type="button" class="btn btn-outline-light me-2">Login</button>
         <button type="button" class="btn btn-warning">Sign-up</button>
 
-        <a href="{% url 'carro:vista' %}" data-bs-toggle="offcanvas" aria-controls="offcanvasRight"
-          data-bs-target="#offcanvasRight" id="canvas">
-          <i class='bx bx-cart'>
-          </i>
-        </a>
-
-        <img src="{% static 'img/cart-img.png' %}" style="width: 50px;">
       </div>
-      <ul>
-
-
-
-
+      <ul style="text-align: center;" >
+        <a href="" data-bs-toggle="offcanvas" aria-controls="offcanvasRight" data-bs-target="#offcanvasRight" id="abrir_canvas">
+          
+          <img src="{% static 'img/carro_azul.png' %}" style="width: 50px;">
+          <span class="badge text-bg-warning">
+            {% if not request.session.items_total %}
+              0
+            {% else %}
+              {{request.session.items_total}}
+            {% endif %}
+          </span>
+        </a>
+        
       </ul>
     </div>
   </div>
 
   <!--CANVAS-->
+  {% include 'componentes/cesta_canvas.html' %}
 
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="color: black;">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasRightLabel">Mi titulo</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto
-      de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la
-      imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos
-      especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos,
-      quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las
-      cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus
-      PageMaker, el cual incluye versiones de Lorem Ipsum.
-    </div>
-  </div>
 </header>
 
-<script>
+{% block javascript/jquery %}
+  <script>
 
-
-  /*
-  window.onload=function()
-
-  {
-    
-    var elemento=document.getElementById("canvas");
-
-    elemento.onmousemove = function(e) {
-
-
-      alert('aprieto boton')
-      // El contenido de esta funcion se ejecutara cuanso el mouse
-
-      // pase por encima del elemento
-
-
-
-      document.getElementById("estado").innerHTML="El ratón esta encima del recuadro";
-
-    };
-
-    elemento.onmouseout = function(e) {
-
-
-
-      // El contenido de esta funcion se ejecutara cuanso el mouse
-
-      // salga del elemento
-
-
-
-      document.getElementById("estado").innerHTML="El ratón NO esta encima del recuadro";
-
-    };
-    
-  }
-  */
   </script>
+{% endblock javascript/jquery %}
+
 
 <div class="b-example-divider"></div>

@@ -8,5 +8,4 @@ urlpatterns = [
     path('', vista, name="vista"),
     path('delete/', borrar_carro, name="borrar-carro"),
     path('<slug:slug>/',update_to_cart, name="update_to_cart"),
-    
 ]

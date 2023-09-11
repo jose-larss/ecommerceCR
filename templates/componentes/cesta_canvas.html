@@ -1,0 +1,81 @@
+{% load static %}
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="color: black;">
+    <div class="offcanvas-header">
+      <h1 class="offcanvas-title" id="offcanvasRightLabel">Cesta</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    
+        {% if previo_carro_vacio %}
+            <div class="card mb-3" style="margin: 10px; height:250px">
+                <div class="card-body" style="margin:120px">
+                    <h1 style="text-align: center;" class="card-title">Llena tu cesta de nuevas tendencias.</h1>
+                    <p class="card-text" style="text-align: center;">
+                        <button type="button" class="btn btn-outline-primary">Iniciar Sesion</button>&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'producto:all' %}" type="button" class="btn btn-primary">Volver a la tienda</a>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="row"> 
+                <div class="col-12">  
+                    <div class="card" >
+                        <div class="row g-0">
+                           
+                            {% for item in previo_carro.productos.all %}
+                                <div class="col-md-2">
+                                    {% if item.productoimagen_set.fotoActivaPresentada %}
+                                        {% for imagen in item.productoimagen_set.fotoActivaPresentada %}
+                                            <img src="{{imagen.imagen.url}}" class="img-thumbnail" alt="{{item.titulo}}" 
+                                                        width="200px" height="400px" style="margin: 10px;">
+                                        {% endfor %}
+                                    {% else %}
+                                        <img src="{% static 'img/placeholder.png' %}" class="img-fluid rounded-start" alt=""  
+                                                        width="200px" height="400px" style="margin: 10px;">
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-10">
+                                    <div class="card-body">
+
+                                        <b>{{item.titulo|title}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{item.precio}}</b>                    
+                                        <br>
+                                        {{item.descripcion|truncatewords:2}}
+                                        <br>
+                                        Talla: 43
+                                        <br>
+                                        <br>
+                                        <small>
+                                            <a href="{{item.get_carro_producto_url}}" class="a_resaltado">
+                                            
+                                                Eliminar
+                                            </a>       
+                                                | Mover a favoritos
+                                        </small>
+
+                                        
+                                               
+                                    </div>
+                                </div>
+                                <hr/>
+                            {% endfor %}
+                            <div style="margin: 10px;">
+                                <div style="text-align: left;">
+                                    Envío
+                                </div>
+                                
+                             
+                                <div style="text-align: right;">
+                                    <b>Total</b> (IVA incluido)
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        {% endif%}
+
+</div>

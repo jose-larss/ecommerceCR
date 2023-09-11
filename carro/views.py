@@ -6,11 +6,8 @@ from carro.models import Carro
 def vista(request):
     msj_articulos = ""
     carro_vacio = False
-    
-    try:
-        the_id = request.session['carro_id']
-    except:
-        the_id = None
+
+    the_id = request.session.get('carro_id')
     print(the_id)
     if the_id:
         carro = Carro.objects.get(id=the_id)
@@ -27,26 +24,27 @@ def vista(request):
             "carro_vacio":carro_vacio,
             "msj_articulos":msj_articulos
         }
-    else:
+    elif the_id == None:
         context = {
             'carro_vacio': True
         }
 
-    return render(request, "carros/vista.html", context)
+    #return render(request, "carros/vista.html", context)
+    return redirect('producto:all')
 
 
 def update_to_cart(request, slug):
+    request.session.set_expiry(12000)
     nuevo_total = 0.00
     
-    try:
-        the_id = request.session['carro_id']
-    except:
+    the_id = request.session.get('carro_id')
+    print(the_id)
+    if the_id == None:
         nuevo_carro = Carro()
         nuevo_carro.save()
         request.session['carro_id'] = nuevo_carro.id
         the_id = nuevo_carro.id
-    print(the_id)
-
+    
     carro = Carro.objects.get(id=the_id)
     producto = get_object_or_404(Producto, slug=slug)
 
@@ -59,6 +57,7 @@ def update_to_cart(request, slug):
         nuevo_total += float(item.precio)
     
     print(nuevo_total)
+    request.session['items_total'] = carro.productos.count()
     carro.total = nuevo_total
     carro.save()
     
@@ -75,5 +74,5 @@ def borrar_carro(request):
     carro.productos.clear()
     carro.total = 0
     carro.save()
-        
+    request.session["items_total"] = 0
     return redirect("carro:vista")
