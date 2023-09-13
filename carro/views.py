@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 
 from producto.models import Producto
 from carro.models import Carro
@@ -28,14 +28,14 @@ def vista(request):
         context = {
             'carro_vacio': True
         }
-
-    #return render(request, "carros/vista.html", context)
-    return redirect('producto:all')
+    
+    return render(request, "carros/vista.html", context)
 
 
 def update_to_cart(request, slug):
     request.session.set_expiry(12000)
     nuevo_total = 0.00
+    url = request.GET['url']
     
     the_id = request.session.get('carro_id')
     print(the_id)
@@ -56,13 +56,14 @@ def update_to_cart(request, slug):
     for item in carro.productos.all():
         nuevo_total += float(item.precio)
     
-    print(nuevo_total)
     request.session['items_total'] = carro.productos.count()
     carro.total = nuevo_total
     carro.save()
     
-    return redirect("carro:vista")
-
+    #return redirect("carro:vista")
+    #return redirect('producto:all')
+    return redirect(url)
+    
 
 def borrar_carro(request):
     the_id = request.session['carro_id']

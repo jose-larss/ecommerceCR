@@ -47,7 +47,7 @@
       </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 text-secondary">Costura Real</a></li>
+        <li><a href="{% url 'producto:all' %}" class="nav-link px-2 text-secondary">Costura Real</a></li>
         <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
         <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
         <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
@@ -87,18 +87,25 @@
 
       </div>
       <ul style="text-align: center;" >
-        <a href="" data-bs-toggle="offcanvas" aria-controls="offcanvasRight" data-bs-target="#offcanvasRight" id="abrir_canvas">
-          
-          <img src="{% static 'img/carro_azul.png' %}" style="width: 50px;">
-          <span class="badge text-bg-warning">
-            {% if not request.session.items_total %}
-              0
-            {% else %}
-              {{request.session.items_total}}
-            {% endif %}
-          </span>
-        </a>
+        {% if not request.session.items_total %}
+
+          <a href="{% url 'carro:vista' %}">
+              
+            <img src="{% static 'img/carro_azul.png' %}" style="width: 50px;">
+            <span class="badge text-bg-warning"> 
+                0
+            </span>
+          </a>
+        {% else %}
+          <a href="" data-bs-toggle="offcanvas" aria-controls="offcanvasRight" data-bs-target="#offcanvasRight" id="abrir_canvas">
+            
+            <img src="{% static 'img/carro_azul.png' %}" style="width: 50px;">
+            <span class="badge text-bg-warning">
+                {{request.session.items_total}}
+            </span>
+          </a>
         
+        {% endif %}
       </ul>
     </div>
   </div>

@@ -70,7 +70,7 @@
                   <h1 class="card-title">{{producto.titulo|title}}</h1>
                   <h2 class="card-text"><b>{{producto.descripcion|truncatewords:10}}</b></h2>
                   <h3 class="card-text"><small class="text-body-secondary">{{producto.precio}} €</small></h3>
-                  <a href="{{producto.get_carro_producto_url}}" type="button" 
+                  <a href="{{producto.get_carro_producto_url}}?url={{request.get_full_path}}" type="button" 
                                                 class="btn btn-primary btn-lg">Añadir a la cesta</a>
                 </div>
             </div>
