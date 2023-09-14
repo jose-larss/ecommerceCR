@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 
 from producto.models import Producto
-from carro.models import Carro
+from carro.models import Carro, CarroItem
 
 def vista(request):
     msj_articulos = ""
@@ -12,12 +12,12 @@ def vista(request):
     if the_id:
         carro = Carro.objects.get(id=the_id)
         
-        if carro.productos.all().count() == 0:
+        if carro.carroitem_set.all().count() == 0:
             carro_vacio = True
-        elif carro.productos.all().count() == 1:
-            msj_articulos = f"{carro.productos.all().count()} artículo"
-        elif carro.productos.all().count() > 1:
-            msj_articulos = f"{carro.productos.all().count()} artículos"
+        elif carro.carroitem_set.all().count() == 1:
+            msj_articulos = f"{carro.carroitem_set.all().count()} artículo"
+        elif carro.carroitem_set.all().count() > 1:
+            msj_articulos = f"{carro.carroitem_set.all().count()} artículos"
 
         context = {
             "carro": carro,
@@ -35,7 +35,10 @@ def vista(request):
 def update_to_cart(request, slug):
     request.session.set_expiry(12000)
     nuevo_total = 0.00
-    url = request.GET['url']
+    url = request.GET.get('url')
+
+    qty = request.GET.get("qty")
+    color = request.GET.get("color")
     
     the_id = request.session.get('carro_id')
     print(the_id)
@@ -48,21 +51,35 @@ def update_to_cart(request, slug):
     carro = Carro.objects.get(id=the_id)
     producto = get_object_or_404(Producto, slug=slug)
 
-    if not producto in carro.productos.all():
-        carro.productos.add(producto)
+    cart_item, created = CarroItem.objects.get_or_create(carro=carro, producto=producto)
+    if created:
+        print("creado")
+    print(qty)
+    print(color)
+    if int(qty) == 0:
+        cart_item.delete()
     else:
-        carro.productos.remove(producto)
+        cart_item.cantidad = qty
+        cart_item.linea_total = float(cart_item.cantidad) * float(cart_item.producto.precio)
+        cart_item.save()
+    """
+    if not cart_item in carro.items.all():
+        carro.items.add(cart_item)
+    else:
+        carro.items.remove(cart_item)
+    """
+
+    for item in carro.carroitem_set.all():
+        linea_total = float(item.producto.precio) * item.cantidad
+        nuevo_total += linea_total
     
-    for item in carro.productos.all():
-        nuevo_total += float(item.precio)
-    
-    request.session['items_total'] = carro.productos.count()
+    request.session['items_total'] = carro.carroitem_set.count()
     carro.total = nuevo_total
     carro.save()
     
-    #return redirect("carro:vista")
+    return redirect("carro:vista")
     #return redirect('producto:all')
-    return redirect(url)
+    #return redirect(url)
     
 
 def borrar_carro(request):

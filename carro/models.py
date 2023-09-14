@@ -2,8 +2,10 @@ from django.db import models
 
 from producto.models import Producto
 
+
 class Carro(models.Model):
-    productos = models.ManyToManyField(Producto, blank=True)
+    #items = models.ManyToManyField(CartItem, blank=True)
+    #productos = models.ManyToManyField(Producto, blank=True)
     total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -12,3 +14,14 @@ class Carro(models.Model):
     def __str__(self):
         return f"Carro id: {self.id}"
     
+
+class CarroItem(models.Model):
+    carro = models.ForeignKey(Carro, on_delete=models.CASCADE, null=True, blank=True)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField(default=1)
+    linea_total = models.DecimalField(default=10.99, max_digits=100,decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.producto.titulo     

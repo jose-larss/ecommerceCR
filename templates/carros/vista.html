@@ -34,10 +34,10 @@
                 <div class="card mb-3" style="max-width: 840px;">
                     <div class="row g-0">
                         <h1 style="margin: 10px;">Tu cesta ({{msj_articulos}})</h1><a href="{% url 'carro:borrar-carro' %}">Borrar Carro</a>
-                        {% for item in carro.productos.all %}
+                        {% for item in carro.carroitem_set.all %}
                             <div class="col-md-2">
-                                {% if item.productoimagen_set.fotoActivaPresentada %}
-                                    {% for imagen in item.productoimagen_set.fotoActivaPresentada %}
+                                {% if item.producto.productoimagen_set.fotoActivaPresentada %}
+                                    {% for imagen in item.producto.productoimagen_set.fotoActivaPresentada %}
                                         <img src="{{imagen.imagen.url}}" class="img-thumbnail" alt="{{item.titulo}}" 
                                                     width="200px" height="400px" style="margin: 10px;">
                                     {% endfor %}
@@ -53,16 +53,16 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <b>{{item.titulo|title}}</b>
+                                                    <b>{{item.producto.titulo|title}}</b>
                                                     <br>
-                                                    {{item.descripcion|truncatewords:8}}
+                                                    {{item.producto.descripcion|truncatewords:8}}
                                                     <br>
                                                     Color: rojo
                                                     <br>
                                                     Talla: 43
                                                 </td>
                                                 <td></td>
-                                                <td></td>
+                                                <td>{{item.cantidad}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Entrega rápida:</td>
@@ -70,14 +70,14 @@
                                                 <td></td>
                                             </tr>
                                             <tr> 
-                                                <td>
-                                                    <a href="{{item.get_carro_producto_url}}" class="a_resaltado">
+                                                <td>{{item.get_carro_producto_url}}
+                                                    <a href="{{item.producto.get_carro_producto_url}}?qty=0" class="a_resaltado">
                                                         <img src="{% static 'img/icon-delete.png' %}" width="25px">
                                                             Eliminar
                                                     </a>
                                                 </td>
                                                 <td>Mover a favoritos</td>
-                                                <td><b>{{item.precio}}</b></td>
+                                                <td><b>{{item.linea_total}}</b></td>
                                             </tr>
                                         </tbody>
                                     </table>

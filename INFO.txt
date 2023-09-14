@@ -22,5 +22,6 @@ Javascript/Jquery(estatico)
 
 - Implementar que al borrar un articulo que tenga fotos sus fotos de media se borren - Hecho
 - implementar en single producto que las miniaturas salgan por miniatura = True y no como ahora fotos activas - Hecho
+- Implementar mismos productos con varianza de color como se ve en detalle de zalando
 
-- Voy por capitulo 24
+- Voy por capitulo 29

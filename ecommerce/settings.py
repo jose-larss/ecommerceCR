@@ -73,7 +73,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'producto.context_processor.get_current_path',
-                'carro.context_processor.vista_previa_cesta',
+                #'carro.context_processor.vista_previa_cesta',
             ],
         },
     },
