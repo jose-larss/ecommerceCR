@@ -2,7 +2,15 @@ from django.contrib import admin
 
 from carro.models import Carro, CarroItem
 
-class CarroAdmin(admin.ModelAdmin):
+
+class CarroItemInline(admin.StackedInline):
+    model = CarroItem
+    extra = 0
+    readonly_fields = ["timestamp", "updated"]
+    date_hierarchy = "timestamp"
+
+class CarroAdmin(admin.ModelAdmin):   
+    inlines = [CarroItemInline] 
     date_hierarchy = "timestamp"
     list_display = ["id","total", "activo"]
     list_editable = ["total", "activo"]
@@ -12,6 +20,7 @@ class CarroAdmin(admin.ModelAdmin):
     class Meta:
         model: Carro
 
+"""
 class CartItemAdmin(admin.ModelAdmin):
     date_hierarchy = "timestamp"
     list_editable = ["cantidad"]
@@ -20,6 +29,6 @@ class CartItemAdmin(admin.ModelAdmin):
 
     class Meta:
         model: CarroItem
-
+"""
 admin.site.register(Carro, CarroAdmin)
-admin.site.register(CarroItem, CartItemAdmin)
+#admin.site.register(CarroItem, CartItemAdmin)

@@ -73,10 +73,9 @@
                   <form method="get" action="{{producto.get_carro_producto_url}}?url={{request.get_full_path}}">
                     <input class="form-control" name="qty" type="number" value="1"/>
                     <input class="form-control" name="color" type="text" placeholder="color"/>
-                    <button type="submit" class="btn btn-dark btn-lg">Añadir a la cesta</button>
+                    <br>
+                    <button type="submit" class="btn btn-dark btn-lg form-control">Añadir a la cesta</button>
                   </form>
-                  <a href="{{producto.get_carro_producto_url}}?url={{request.get_full_path}}&qty=100" type="button" 
-                                                class="btn btn-dark btn-lg">Añadir a la cesta</a>
                 </div>
             </div>
         </div>

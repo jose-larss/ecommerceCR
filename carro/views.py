@@ -54,6 +54,7 @@ def update_to_cart(request, slug):
     cart_item, created = CarroItem.objects.get_or_create(carro=carro, producto=producto)
     if created:
         print("creado")
+    print(cart_item)
     print(qty)
     print(color)
     if int(qty) == 0:
