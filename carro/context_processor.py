@@ -7,11 +7,12 @@ def vista_previa_cesta(request):
     if the_id:
         carro = Carro.objects.get(id=the_id)
         
-        if carro.productos.all().count() == 0:
+        if carro.carroitem_set.count() == 0:
             carro_vacio = True
-
+        carro_items = carro.carroitem_set.orderByTimestamp
         context = {
-            "previo_carro": carro,
+            "previo_total":carro.total,
+            "previo_carro": carro_items,
             "previo_carro_vacio":carro_vacio,
         }
     elif the_id == None:

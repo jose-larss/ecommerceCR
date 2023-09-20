@@ -23,10 +23,10 @@
                 <div class="card" >
                     <div class="row g-0">
                         
-                        {% for item in previo_carro.productos.all %}
+                        {% for item in previo_carro %}
                             <div class="col-md-2">
-                                {% if item.productoimagen_set.fotoActivaPresentada %}
-                                    {% for imagen in item.productoimagen_set.fotoActivaPresentada %}
+                                {% if item.producto.productoimagen_set.fotoActivaPresentada %}
+                                    {% for imagen in item.producto.productoimagen_set.fotoActivaPresentada %}
                                         <img src="{{imagen.imagen.url}}" class="img-thumbnail" alt="{{item.titulo}}" 
                                                     width="200px" height="400px" style="margin: 10px;">
                                     {% endfor %}
@@ -39,15 +39,15 @@
                             <div class="col-md-10">
                                 <div class="card-body">
 
-                                    <b>{{item.titulo|title}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{item.precio}} €</b>                    
+                                    <b>{{item.producto.titulo|title}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{item.linea_total}} €</b>                    
                                     <br>
-                                    {{item.descripcion|truncatewords:2}}
+                                    {{item.producto.descripcion|truncatewords:2}}
                                     <br>
                                     Talla: 43
                                     <br>
                                     
                                     <small>
-                                        <a href="{{item.get_carro_producto_url}}?url={{request.get_full_path}}" class="a_resaltado">
+                                        <a href="{{item.producto.get_carro_producto_url}}?url={{request.get_full_path}}&qty=0" class="a_resaltado">
                                         
                                             Eliminar
                                         </a>       
@@ -75,7 +75,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td><b style="font-size: 25px;">{{previo_carro.total}} €</b></td>
+                                    <td><b style="font-size: 25px;">{{previo_total}} €</b></td>
                                 </tr>
                                 
                             </table>

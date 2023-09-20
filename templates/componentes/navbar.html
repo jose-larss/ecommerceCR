@@ -87,16 +87,25 @@
 
       </div>
       <ul style="text-align: center;" >
-        {% if not request.session.items_total %}
-
-          <a href="{% url 'carro:vista' %}">
-              
+        {% if not request.session.items_total or request.get_full_path == "/carro/" %}
+          {% if not request.session.items_total %}
+            <a href="{% url 'carro:vista' %}">
+                
+              <img src="{% static 'img/carro_azul.png' %}" style="width: 50px;">
+              <span class="badge text-bg-warning"> 
+                  0
+              </span>
+            </a>
+          {% else %}
+          
             <img src="{% static 'img/carro_azul.png' %}" style="width: 50px;">
             <span class="badge text-bg-warning"> 
-                0
+                {{request.session.items_total}}
             </span>
-          </a>
-        {% else %}
+            
+          {% endif %}
+        {% elif request.session.items_total %}
+        
           <a href="" data-bs-toggle="offcanvas" aria-controls="offcanvasRight" data-bs-target="#offcanvasRight" id="abrir_canvas">
             
             <img src="{% static 'img/carro_azul.png' %}" style="width: 50px;">
@@ -104,8 +113,8 @@
                 {{request.session.items_total}}
             </span>
           </a>
-        
         {% endif %}
+        
       </ul>
     </div>
   </div>

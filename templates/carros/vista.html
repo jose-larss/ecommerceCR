@@ -26,7 +26,8 @@
         </div>
 
     {% else %}
-
+    
+        <div id="pintar_cesta">
         <div class="row" style="margin: 10px;">
             
             <div class="col-8">
@@ -34,7 +35,7 @@
                 <div class="card mb-3" style="max-width: 840px;">
                     <div class="row g-0">
                         <h1 style="margin: 10px;">Tu cesta ({{msj_articulos}})</h1><a href="{% url 'carro:borrar-carro' %}">Borrar Carro</a>
-                        {% for item in carro.carroitem_set.all %}
+                        {% for item in carro %}
                             <div class="col-md-2">
                                 {% if item.producto.productoimagen_set.fotoActivaPresentada %}
                                     {% for imagen in item.producto.productoimagen_set.fotoActivaPresentada %}
@@ -63,13 +64,50 @@
                                                 </td>
                                                 <td></td>
                                                 <td>
-                                                    <select class="form-select form-select-sm" aria-label="Small select example">
-                                                        <option value="1" selected>1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
+                                                    <select onchange="pasar_cantidad('{{item.producto.slug}}', this)" class="form-select form-select-sm" aria-label="Small select example">
+                                                        {% if item.cantidad == 1 %}
+                                                            <option value="{{item.cantidad}}" selected>
+                                                                {{item.cantidad}}
+                                                            </option>
+                                                        {% else %}
+                                                            <option value="1">1</option>
+                                                        {% endif %}
+                                                        {% if item.cantidad == 2 %}
+                                                            <option value="{{item.cantidad}}" selected>
+                                                                {{item.cantidad}}
+                                                            </option>
+                                                        {% else %}
+                                                            <option value="2">2</option>
+                                                        {% endif %}
+                                                        {% if item.cantidad == 3 %}
+                                                            <option value="{{item.cantidad}}" selected>
+                                                                {{item.cantidad}}
+                                                            </option>
+                                                        {% else %}
+                                                            <option value="3">3</option>
+                                                        {% endif %}
+                                                        {% if item.cantidad == 4 %}
+                                                            <option value="{{item.cantidad}}" selected>
+                                                                {{item.cantidad}}
+                                                            </option>
+                                                        {% else %}
+                                                            <option value="4">4</option>
+                                                        {% endif %}
+                                                        {% if item.cantidad == 5 %}
+                                                            <option value="{{item.cantidad}}" selected>
+                                                                {{item.cantidad}}
+                                                            </option>
+                                                        {% else %}
+                                                            <option value="5">5</option>
+                                                        {% endif %}
+                                                        {% if item.cantidad == 6 %}
+                                                            <option value="{{item.cantidad}}" selected>
+                                                                {{item.cantidad}}
+                                                            </option>
+                                                        {% else %}
+                                                            <option value="6">6</option>
+                                                        {% endif %}
+ 
                                                     </select>
                                                 </td>
                                                 <td>{{item.cantidad}}</td>
@@ -80,8 +118,8 @@
                                                 <td></td>
                                             </tr>
                                             <tr> 
-                                                <td>{{item.get_carro_producto_url}}
-                                                    <a href="{{item.producto.get_carro_producto_url}}?qty=0" class="a_resaltado">
+                                                <td>{{item.producto.get_carro_producto_url}}
+                                                    <a href="{{item.producto.get_carro_producto_url}}?url={{request.get_full_path}}&qty=0" class="a_resaltado">
                                                         <img src="{% static 'img/icon-delete.png' %}" width="25px">
                                                             Eliminar
                                                     </a>
@@ -112,7 +150,7 @@
                                 <td>Subtotal</td>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
-                                <td scope="col">{{carro.total}} €</td>
+                                <td scope="col">{{total}} €</td>
                             </tr>
                         </tbody>
                         <tbody>
@@ -131,7 +169,7 @@
                                 <th scope="col">Total (IVA incluido)</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
-                                <th scope="col">{{carro.total}} €</th>
+                                <th scope="col">{{total}} €</th>
 
                             </tr>
 
@@ -154,12 +192,26 @@
             </div>
 
         </div>
-    
+        </div>
     {% endif %}
 
 {% endblock content %}
+
+
+{% block javascript/jquery %}
     <script>
-
+        function pasar_cantidad(slug, cantidad){
+            console.log(cantidad.value);
+            console.log(slug);
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'carro:update_to_quantity' %}",
+                data: {"slug":slug,"qty":cantidad.value},
+                success: function(msg){
+                    console.log("esta de vuelta");
+                    $("#pintar_cesta").html(msg)
+                }
+            });
+        }
     </script>
-
-{% block javascript/jquery %}{% endblock javascript/jquery %}
+{% endblock javascript/jquery %}
