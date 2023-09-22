@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from producto.models import Producto, ProductoImagen, Categoria
+from producto.models import Producto, ProductoImagen, Categoria, Variacion
 
 class CategoriaAdmin(admin.ModelAdmin):
     date_hierarchy = "timestamp"
@@ -26,13 +26,19 @@ class ProductoImagenAdmin(admin.ModelAdmin):
     class Meta:
         model = ProductoImagen
 """
+
+class VariacionInlines(admin.TabularInline):
+    model = Variacion
+    extra = 0
+    readonly_fields = ["updated"]
+
 class ProductoImagenInline(admin.TabularInline):
     model = ProductoImagen
     extra = 0
     readonly_fields = ["updated"]
 
 class ProductoAdmin(admin.ModelAdmin):
-    inlines = [ProductoImagenInline]
+    inlines = [ProductoImagenInline, VariacionInlines]
     date_hierarchy = "timestamp"
     search_fields = ["titulo", "descripcion"]
     list_display = ["titulo","precio", "active", "updated"]
@@ -45,7 +51,18 @@ class ProductoAdmin(admin.ModelAdmin):
     class Meta:
         model = Producto
 
+class VariacionAdmin(admin.ModelAdmin):
+    list_display = ["producto", "variacion","imagen","titulo","precio", "active"]
+    list_editable = ["precio","imagen", "titulo", "precio","active"]
+    list_filter = ["producto"]
+    readonly_fields = ["updated"]
+    ordering = ["producto"]
+
+    class Meta:
+        model = Variacion
+
 
 admin.site.register(Producto, ProductoAdmin)
 admin.site.register(Categoria, CategoriaAdmin)
+admin.site.register(Variacion, VariacionAdmin)
 #admin.site.register(ProductoImagen, ProductoImagenAdmin)

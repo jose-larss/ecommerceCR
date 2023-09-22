@@ -26,4 +26,4 @@ Javascript/Jquery(estatico)
 - Hay un bug en cesta final al cambiar cantidades (en concreto 2 a la vez) de producto y despues refrescar pagina que todo
 esta OK a nivel contabilidad, pero no a nivel de la caja de cantidad
 
-- Voy por capitulo 29
+- Voy por capitulo 34

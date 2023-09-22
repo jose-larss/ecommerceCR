@@ -3,7 +3,6 @@ import shutil
 from django.conf import settings
 from django.db.models import Q
 from django.urls import reverse
-from django.db.models.signals import pre_save
 
 from django.db import models
 
@@ -71,6 +70,8 @@ class Producto(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+
+    update_defaults = models.BooleanField(default=False)
 
     objects = ProductoManager()
 
@@ -141,4 +142,38 @@ class ProductoImagen(models.Model):
         super(ProductoImagen,self).delete(*args, **kwargs)
 
 
+class VariacionManager(models.Manager):
+    def all(self):
+        return super(VariacionManager, self).filter(active=True)
+
+    def sizes(self):
+        return self.all().filter(variacion='size')
+    
+    #def colors(self):
+    #    return super().filter(active=True, variacion= "color")
+
+VAR_CATEGORIES = (
+    ('size', 'size'),
+    ('color', 'color'),
+    ('package', 'package'),
+)
+
+class Variacion(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    variacion = models.CharField(max_length=120, choices=VAR_CATEGORIES, default='size') 
+    #creo que sobra la imagen
+    imagen = models.ForeignKey(ProductoImagen, on_delete=models.CASCADE, null=True, blank=True)
+    titulo = models.CharField(max_length=120)
+    precio = models.DecimalField(max_digits=100, decimal_places=2, null=True, blank=True)
+    active = models.BooleanField(default=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = VariacionManager()
+
+    class Meta:
+        verbose_name = "Variación"
+        verbose_name_plural = "Variaciones"
+
+    def __str__(self):
+        return self.titulo
 

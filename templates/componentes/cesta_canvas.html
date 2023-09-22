@@ -43,11 +43,14 @@
                                     <br>
                                     {{item.producto.descripcion|truncatewords:2}}
                                     <br>
-                                    Talla: 43
+                                    Talla: 
+                                        {% for talla in item.variaciones.all %}
+                                            {{talla}}
+                                        {% endfor %}
                                     <br>
                                     
                                     <small>
-                                        <a href="{{item.producto.get_carro_producto_url}}?url={{request.get_full_path}}&qty=0" class="a_resaltado">
+                                        <a href="{{item.get_borrar_item_url}}?url={{request.get_full_path}}&qty=0" class="a_resaltado">
                                         
                                             Eliminar
                                         </a>       

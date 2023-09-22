@@ -7,7 +7,8 @@
         
         <div class="card mb-3" style="max-width: 840px;">
             <div class="row g-0">
-                <h1 style="margin: 10px;">Tu cesta ({{msj_articulos}})</h1><a href="{% url 'carro:borrar-carro' %}">Borrar Carro</a>
+                <h1 style="margin: 10px;">Tu cesta ({{msj_articulos}})</h1>
+                <a style="margin: 10px; text-decoration:none; color:black" href="{% url 'carro:borrar_carro' %}"><u>Borrar Carro</u></a>
                 {% for item in carro %}
                     <div class="col-md-2">
                         {% if item.producto.productoimagen_set.fotoActivaPresentada %}
@@ -31,9 +32,12 @@
                                             <br>
                                             {{item.producto.descripcion|truncatewords:8}}
                                             <br>
-                                            Color: rojo
+                                            Color: 
                                             <br>
-                                            Talla: 43
+                                            Talla: 
+                                            {% for talla in item.variaciones.all %}
+                                                {{talla}}
+                                            {% endfor %}
                                         </td>
                                         <td></td>
                                         <td>
@@ -91,10 +95,10 @@
                                         <td></td>
                                     </tr>
                                     <tr> 
-                                        <td>{{item.producto.get_carro_producto_url}}
-                                            <a href="{{item.producto.get_carro_producto_url}}?url=/carro/&qty=0" class="a_resaltado">
+                                        <td>
+                                            <a href="{{item.get_borrar_item_url}}" class="a_resaltado">
                                                 <img src="{% static 'img/icon-delete.png' %}" width="25px">
-                                                    Eliminar
+                                                    Eliminar {{item.id}}
                                             </a>
                                         </td>
                                         <td>Mover a favoritos</td>
