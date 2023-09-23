@@ -40,6 +40,8 @@ def buscar(request):
     return render(request, "productos/resultados.html", context)
 
 def single(request, slug):
+    lista_productos_iguales = []
+
     producto = get_object_or_404(Producto, slug=slug)
     categoria_producto = producto.categoria.all().first()
     #productos_all_related = Producto.objects.filter(categoria=categoria_producto, active=True).exclude(id=producto.id)
@@ -53,8 +55,17 @@ def single(request, slug):
     """
     random.shuffle(lista_productos_all_related)
     
+    productos_iguales = Producto.objects.filtrar3(producto.titulo, producto.id)
+    convertir_lista_productos_iguales = [x for x in list(productos_iguales)]
+    random.shuffle(convertir_lista_productos_iguales)
+
+    lista_productos_iguales.append(producto)
+    for producto in convertir_lista_productos_iguales:
+        lista_productos_iguales.append(producto)
+    
     context={"producto":producto,
-             "related_productos":lista_productos_all_related[0:6]}
+             "related_productos":lista_productos_all_related[0:6],
+             "equals_productos":lista_productos_iguales}
     return render(request, "productos/single.html", context)
 
 

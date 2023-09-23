@@ -11,10 +11,10 @@ app_name = "carro"
 urlpatterns = [
     
     path('', vista, name="vista"),
-    #path('<str:url>/', vista, name="vista_con_parametro"),
     path('actualizar_cantidad/',update_to_quantity, name="update_to_quantity"),
+    path('delete/', borrar_carro, name="borrar_carro"),
     path('<slug:slug>/',add_to_cart, name="update_to_cart"),
     path('delete_item/<int:item_carroid>/', borrar_item_carro, name="borrar_item_carro"),
-    path('delete/', borrar_carro, name="borrar_carro"),
+   
     
 ]

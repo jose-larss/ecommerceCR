@@ -43,6 +43,9 @@ class ProductoQueryset(models.QuerySet):
             return self.none()
         lookups = (Q(titulo__icontains=query) | Q(descripcion__icontains=query))
         return self.filter(lookups)
+    
+    def productoIgualesDiferentesColoresExcluyedo1(self, titulo, id):
+        return self.filter(active=True, titulo__iexact=titulo).exclude(id=id)
 
 class ProductoManager(models.Manager):
     def get_queryset(self):
@@ -54,6 +57,9 @@ class ProductoManager(models.Manager):
     def filtrar2(self, categoria, id):
         return self.get_queryset().productosCategoriaExcluyendo1(categoria, id)
     
+    def filtrar3(self, titulo, id):
+        return self.get_queryset().productoIgualesDiferentesColoresExcluyedo1(titulo, id)
+    
     def buscar(self, query=None):
         return self.get_queryset().buscar(query=query)
 
@@ -64,8 +70,9 @@ class Producto(models.Model):
     categoria = models.ManyToManyField(Categoria, blank=True)
     precio = models.DecimalField(decimal_places=2, max_digits=100, default=29.99)
     #Este campo me da que nunca lo uso
-    #precio_venta = models.DecimalField(decimal_places=2, max_digits=100,\
-    #                                                        null=True, blank=True)
+    #precio_venta = models.DecimalField(decimal_places=2, max_digits=100,\   
+    #                                                     null=True, blank=True)
+    color = models.CharField(max_length=120, blank=True, null=True)
     slug = models.SlugField(unique=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -80,7 +87,7 @@ class Producto(models.Model):
         ordering = ['titulo']
 
     def __str__(self):
-        return self.titulo
+        return self.slug
      
     def delete(self, *args, **kwargs):
         ruta_directorio = f"productos/imagenes/{self.titulo}"

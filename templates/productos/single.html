@@ -68,10 +68,11 @@
         <div class="col-4">
             <div class="card mb-3" style="margin-top: 10px;">
                 <div class="card-body">
-                  <h1 class="card-title">{{producto.titulo|title}}</h1>
-                  <h2 class="card-text"><b>{{producto.descripcion|truncatewords:10}}</b></h2>
-                  <h3 class="card-text"><small class="text-body-secondary">{{producto.precio}} € IVA incluido</small></h3>
-
+                  <h3 class="card-title">{{producto.titulo|title}}</h1>
+                  <h4 class="card-text"><b>{{producto.descripcion|truncatewords:10}}</b></h2>
+                  <h5 class="card-text"><small class="text-body-secondary">{{producto.precio}} € IVA incluido</small></h3>
+                    
+                    {{equals_productos}}   
                   <form method="post" action="{{producto.get_carro_producto_url}}?url={{request.get_full_path}}">
                     {% csrf_token %}
                     
@@ -142,7 +143,7 @@
         const miniaturas = document.querySelectorAll('.miniaturas')
 
         miniaturas.forEach(miniatura => {
-            miniatura.addEventListener('click', function(){
+            miniatura.addEventListener('mouseover', function(){
                 const activo = document.querySelector('.activo')
                 activo.classList.remove('activo')
                 miniatura.classList.add('activo')

@@ -78,7 +78,7 @@ def update_to_quantity(request):
 
 
 def add_to_cart(request, slug):
-    request.session.set_expiry(120)
+    request.session.set_expiry(12000)
     nuevo_total = 0.00
     #notas = {} 
     product_var = []

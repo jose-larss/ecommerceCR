@@ -32,7 +32,7 @@
                                             <br>
                                             {{item.producto.descripcion|truncatewords:8}}
                                             <br>
-                                            Color: 
+                                            Color: {{item.producto.color}}
                                             <br>
                                             Talla: 
                                             {% for talla in item.variaciones.all %}

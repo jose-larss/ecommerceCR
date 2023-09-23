@@ -41,11 +41,11 @@ class ProductoAdmin(admin.ModelAdmin):
     inlines = [ProductoImagenInline, VariacionInlines]
     date_hierarchy = "timestamp"
     search_fields = ["titulo", "descripcion"]
-    list_display = ["titulo","precio", "active", "updated"]
+    list_display = ["titulo", "color","precio", "active", "updated"]
     list_editable = ["precio", "active"]
     list_filter = ["categoria","precio", "active"]
     readonly_fields = ["timestamp", "updated"]
-    prepopulated_fields = {'slug': ["titulo"]}
+    prepopulated_fields = {'slug': ["titulo", "color"]}
     ordering = ["titulo"]
     
     class Meta:
