@@ -23,10 +23,11 @@ from producto.views import all_products, buscar
 
 urlpatterns = [
     path('', all_products, name="all_products"),
-    path('admin/', admin.site.urls),
+    path('s/', buscar, name="buscar"),
     path('producto/', include('producto.urls')),
     path('carro/', include('carro.urls')),
-    path('s/', buscar, name="buscar"),
+    path('pedido/', include('pedido.urls')),
+    path('admin/', admin.site.urls),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

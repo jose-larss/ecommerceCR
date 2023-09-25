@@ -22,8 +22,16 @@ Javascript/Jquery(estatico)
 
 - Implementar que al borrar un articulo que tenga fotos sus fotos de media se borren - Hecho
 - implementar en single producto que las miniaturas salgan por miniatura = True y no como ahora fotos activas - Hecho
-- Implementar mismos productos con varianza de color como se ve en detalle de zalando
+- Implementar mismos productos con varianza de color como se ve en detalle de zalando - Hecho
+
 - Hay un bug en cesta final al cambiar cantidades (en concreto 2 a la vez) de producto y despues refrescar pagina que todo
 esta OK a nivel contabilidad, pero no a nivel de la caja de cantidad
+- Intentar poner el nombre de color como en zalando, cuando pasa raton por encima
+- Ahora se guardan las fotos del producto por nombre (habiendo un nombre para todos los colores) lo suyo seria que se 
+guardaran por el slug asics-amarillo
+- items eliminados de carro, ver si es mejor dejarlos como ahora, o borrarlos completamente
+- Ver problema de la barra del canvas de desplazamiento que no aparece
+- Problema si se añaden 2 articulos iguales en la vista del carro, al actualizar cualquiera de los items iguales la cantidad
+da error
 
 - Voy por capitulo 34

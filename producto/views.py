@@ -43,6 +43,7 @@ def single(request, slug):
     lista_productos_iguales = []
 
     producto = get_object_or_404(Producto, slug=slug)
+    print(producto)
     categoria_producto = producto.categoria.all().first()
     #productos_all_related = Producto.objects.filter(categoria=categoria_producto, active=True).exclude(id=producto.id)
     productos_all_related = Producto.objects.filtrar2(categoria_producto, producto.id)
@@ -60,12 +61,12 @@ def single(request, slug):
     random.shuffle(convertir_lista_productos_iguales)
 
     lista_productos_iguales.append(producto)
-    for producto in convertir_lista_productos_iguales:
-        lista_productos_iguales.append(producto)
+    for item in convertir_lista_productos_iguales:
+        lista_productos_iguales.append(item)
     
     context={"producto":producto,
              "related_productos":lista_productos_all_related[0:6],
-             "equals_productos":lista_productos_iguales}
+             "equals_productos":lista_productos_iguales[0:6]}
     return render(request, "productos/single.html", context)
 
 

@@ -41,7 +41,7 @@ class ProductoQueryset(models.QuerySet):
     def buscar(self, query=None):
         if query is None or query == "":
             return self.none()
-        lookups = (Q(titulo__icontains=query) | Q(descripcion__icontains=query))
+        lookups = (Q(titulo__icontains=query) | Q(descripcion__icontains=query) | Q(color__icontains=query))
         return self.filter(lookups)
     
     def productoIgualesDiferentesColoresExcluyedo1(self, titulo, id):

@@ -34,9 +34,9 @@
             
         }
      
-    </style>
+    </style>{{producto}}
     <div class="row">
-        <div class="col-2">
+        <div class="col-1">
             {% if producto.productoimagen_set.fotoActivaMiniatura %}
                 {% for foto in producto.productoimagen_set.fotoActivaMiniatura %}
                     {% if forloop.first %}
@@ -51,7 +51,7 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <div class="col-6">
+        <div class="col-5">
             {% if producto.productoimagen_set.fotoActivaPresentada %}
                 {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
                     <div class="card mb-3 img_principal" style="margin-top: 10px;">
@@ -65,14 +65,38 @@
             {% endif %}
         </div>
       
-        <div class="col-4">
+        <div class="col-6">
             <div class="card mb-3" style="margin-top: 10px;">
                 <div class="card-body">
                   <h3 class="card-title">{{producto.titulo|title}}</h1>
                   <h4 class="card-text"><b>{{producto.descripcion|truncatewords:10}}</b></h2>
                   <h5 class="card-text"><small class="text-body-secondary">{{producto.precio}} € IVA incluido</small></h3>
                     
-                    {{equals_productos}}   
+                    <input type="text" class="color_letrero" value="{{producto.color}}"/>
+                    <div class="row row-cols-md-6 g-2">
+                        
+                        {% for producto in equals_productos %}
+
+                            <a href="{{producto.get_absolute_url}}">
+                                
+                                {% if producto.productoimagen_set.fotoActivaPresentada %}
+                                    {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
+                                        <div class="contenedor_miniaturas" style="margin-top: 10px;">
+                                            <div >
+                                                
+                                                <img src="{{foto.imagen.url}}" class="miniaturas_iguales activo" alt="..." width="75px">
+                                            </div>
+
+                                        </div>
+                                    {% endfor %}
+                                
+                                {% endif %}
+                            </a>                  
+  
+                        {% endfor %}
+                        
+                    </div>  
+                    <br> 
                   <form method="post" action="{{producto.get_carro_producto_url}}?url={{request.get_full_path}}">
                     {% csrf_token %}
                     
@@ -85,7 +109,7 @@
                             {% for item in producto.variacion_set.sizes %}
                                
                                 <option value="{{item.titulo|lower}}">{{item.titulo}}</option>
-¡                               
+                               
                             {% endfor %}
                         </select>
                         <!--
@@ -114,6 +138,7 @@
             
             <div class="card div_resaltado" style="width: 13rem; margin-left:10px">
                 <a href="{{producto.get_absolute_url}}" class="a_resaltado">
+                    
                     {% if producto.productoimagen_set.fotoActivaPresentada %}
                         {% for foto in producto.productoimagen_set.fotoActivaPresentada %}
                             <img src="{{foto.imagen.url}}" class="card-img-top" alt="{{producto.titulo}}" height="200px">
@@ -131,7 +156,6 @@
             
         {% endfor %}
        
-
     </div>
 
 {% endblock content %}
@@ -141,7 +165,12 @@
     <script>
         const main_img = document.querySelector('.main_img')
         const miniaturas = document.querySelectorAll('.miniaturas')
+        const miniaturas2 = document.querySelectorAll('.miniaturas_iguales')
 
+        const color_letrero = document.querySelector('.color_letrero')
+
+        const color_iguales = document.querySelectorAll('.color_iguales')
+        console.log(miniaturas2)
         miniaturas.forEach(miniatura => {
             miniatura.addEventListener('mouseover', function(){
                 const activo = document.querySelector('.activo')
@@ -150,6 +179,16 @@
                 main_img.src = miniatura.src  
             })
         })
+        miniaturas2.forEach(miniatura_igual => {
+            miniatura_igual.addEventListener('mouseover', function(){
+                const activo = document.querySelector('.activo')
+                activo.classList.remove('activo')
+                miniatura_igual.classList.add('activo')
+                main_img.src = miniatura_igual.src  
+                
+            })
+        })
+
     </script>
 
 {% endblock javascript/jquery %}
