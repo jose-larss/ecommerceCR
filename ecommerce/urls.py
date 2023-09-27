@@ -26,7 +26,7 @@ urlpatterns = [
     path('s/', buscar, name="buscar"),
     path('producto/', include('producto.urls')),
     path('carro/', include('carro.urls')),
-    path('pedido/', include('pedido.urls')),
+    path('checkout/', include('pedido.urls')),
     path('admin/', admin.site.urls),
 ]
 if settings.DEBUG:

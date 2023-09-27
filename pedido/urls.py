@@ -1,9 +1,10 @@
 from django.urls import path
 
-from pedido.views import pedido
+from pedido.views import checkout, pedidos
 
-app_name = "pedido"
+app_name = "checkout"
 
 urlpatterns = [
-    path('', pedido,name="vista"), 
+    path('', checkout,name="checkout"), 
+    path('pedidos/', pedidos, name="user_orders"),
 ]

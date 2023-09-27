@@ -1,10 +1,16 @@
-import time
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
+
+#from pedido.utils import id_generator
 
 from carro.models import Carro
 from pedido.models import Pedido
 
-def pedido(request):
+
+#@method_decorator(login_required, name="dispatch")
+@login_required
+def checkout(request):
 
     the_id = request.session.get("carro_id")
     if the_id == None:
@@ -14,11 +20,18 @@ def pedido(request):
 
     nuevo_pedido, created = Pedido.objects.get_or_create(carro=carro)
     if created:
-        #asignar un usuario a la orden
-
-        nuevo_pedido.pedido_id = str(time.time())
+        nuevo_pedido.carro = carro
+        nuevo_pedido.usuario = request.user
+        nuevo_pedido.save()       
+    """
+    try:
+        nuevo_pedido= Pedido.objects.get(carro=carro)
+    except Pedido.DoesNotExist:
+        nuevo_pedido = Pedido()
+        nuevo_pedido.carro = carro
+        nuevo_pedido.usuario = request.user
         nuevo_pedido.save()
-
+    """
     if nuevo_pedido.estado == "Finished":
         carro.delete()
         del request.session['carro_id']
@@ -27,4 +40,10 @@ def pedido(request):
         return redirect('carro:vista')
     
     return render(request, "pedidos/pedido.html")
+
+
+def pedidos(request):
+    return render(request, "pedidos/user.html")
+
+
 

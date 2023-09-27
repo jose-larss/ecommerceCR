@@ -6,11 +6,11 @@ class PedidoAdmin(admin.ModelAdmin):
     
     date_hierarchy = "timestamp"
     search_fields = ["pedido_id", "carro"]
-    list_display = ["pedido_id", "carro", "estado", "updated"]
+    list_display = ["id","pedido_id","usuario", "carro", "estado","sub_total", "tax_total", "final_total","updated"]
     readonly_fields = ["timestamp", "updated"]
     list_filter = ["estado"]
-    list_editable = ["carro","estado"]
-    ordering = ["pedido_id"]
+    list_editable = ["carro","estado", "sub_total", "tax_total", "final_total"]
+    ordering = ["-carro"]
 
     class Meta:
         model= Pedido

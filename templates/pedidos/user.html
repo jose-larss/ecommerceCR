@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock title %}
+
+{% block content %}
+    {{user.pedido_set.all}}
+{% endblock content %}
+
+{% block javascript/jquery %}
+
+{% endblock javascript/jquery %}
