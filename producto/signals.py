@@ -1,4 +1,6 @@
-from .models import Variacion
+from django.db.models.signals import post_save
+
+from producto.models import Variacion, Producto
 
 def product_default(sender, instance, created, *args, **kwargs):
     
@@ -60,3 +62,5 @@ def product_default(sender, instance, created, *args, **kwargs):
         #esto es importante ya que sino se convertoria en un bucle infinito
         instance.update_defaults = False
         instance.save()
+
+post_save.connect(product_default, sender=Producto)

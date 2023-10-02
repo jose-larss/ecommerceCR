@@ -34,4 +34,4 @@ guardaran por el slug asics-amarillo
 - Problema si se añaden 2 articulos iguales en la vista del carro, al actualizar cualquiera de los items iguales la cantidad
 da error
 
-- Voy por capitulo 40
+- Voy por capitulo 41
