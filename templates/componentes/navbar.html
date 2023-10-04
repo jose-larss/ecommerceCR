@@ -51,20 +51,7 @@
         <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
         <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
         <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-            style="color: white">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
+
         <li><a href="#" class="nav-link px-2 text-white">About</a></li>
 
         <form class="d-flex" role="search" action="{% url 'buscar' %}" method="get">
@@ -86,6 +73,57 @@
         <button type="button" class="btn btn-warning">Sign-up</button>
 
       </div>
+      {% if request.user.is_authenticated %}
+        <!--Drop down de usuario LOGADO-->
+        <ul class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            style="color: white">
+            <img src="{% static 'img/usuario.png' %}" style="width: 50px;">
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Tu perfil</a></li>
+            <li><a class="dropdown-item" href="#">Pedidos</a></li>
+            <li><a class="dropdown-item" href="#">Devolver artículo</a></li>
+            <li><a class="dropdown-item" href="#">Tus tallas</a></li>
+            <li><a class="dropdown-item" href="#">Ayuda y Contacto</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'cuentas:auth_logout'%}" style="color: blueviolet;">
+                ¿No eres {{request.user}}, Desconectar?
+              </a>
+            </li>
+          </ul>
+        </ul>
+      {% else %}
+        <!--Drop down de usuario DESLOGADO-->
+        <ul class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            style="color: white">
+            <img src="{% static 'img/usuario.png' %}" style="width: 50px; ">
+          </a>
+          <ul class="dropdown-menu">
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-dark" style="margin:10px">Inicio Sesión</button>
+            </div>
+            <li>
+              <a class="dropdown-item" href="#">
+                <span style="color: blueviolet;">¿Nuevo cliente?</span> 
+                Regístrate ahora
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Tu perfil</a></li>
+            <li><a class="dropdown-item" href="#">Pedidos</a></li>
+            <li><a class="dropdown-item" href="#">Devolver artículo</a></li>
+            <li><a class="dropdown-item" href="#">Ayuda y Contacto</a></li>
+
+          </ul>
+        </ul>
+      {% endif %}
       <ul style="text-align: center;" >
         {% if not request.session.items_total or request.get_full_path == "/carro/" %}
           {% if not request.session.items_total %}

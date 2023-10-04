@@ -3,7 +3,7 @@ from django.contrib import admin
 from carro.models import Carro, CarroItem
 
 
-class CarroItemInline(admin.StackedInline):
+class CarroItemInline(admin.TabularInline):
     model = CarroItem
     extra = 0
     readonly_fields = ["timestamp", "updated"]
