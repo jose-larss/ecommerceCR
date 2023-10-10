@@ -33,5 +33,6 @@ guardaran por el slug asics-amarillo
 - Ver problema de la barra del canvas de desplazamiento que no aparece
 - Problema si se añaden 2 articulos iguales en la vista del carro, al actualizar cualquiera de los items iguales la cantidad
 da error
+- Al entrar al admin de django que salga correo-e y password - > esto se hace con abstractBaseUser
 
-- Voy por capitulo 42
+- Voy por capitulo 45

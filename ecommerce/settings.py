@@ -151,4 +151,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#Url Login po defecto va a accounts/login pero yo lo tengo en cuentas/login
+LOGIN_URL = "/cuentas/login"
+
+#Modelo de usuario
+#AUTH_USER_MODEL = "cuenta.CustomUser"
+
+#login with email
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "cuenta.backends.Email_OR_Username"
+]
+
  

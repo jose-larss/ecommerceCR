@@ -17,6 +17,7 @@ class UsuarioStripeInline(admin.StackedInline):
 
 
 class UserAdmin(BaseUserAdmin):
+    list_display = ["id", "username", "email", "first_name", "last_name", "is_staff"]
     inlines = [UsuarioStripeInline]
 
 

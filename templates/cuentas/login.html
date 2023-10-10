@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Login {% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-4">
+
+    </div>
+    <div class="col-4" style="margin-top:50px">
+
+        <div id="mostrar">
+            <h1>Te damos la bienvenida</h1>
+            <form action="{% url 'cuentas:auth_login'%}" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <div class="d-grid gap-2">
+                    <button class="btn btn-dark" type="submit" class="btn btn-primary">Iniciar sesión</button>
+                </div>
+        
+            </form>
+            <div style="margin-top:10px;">
+                <span style="color: blueviolet;">¿Has olvidado tu contraseña?</span>
+            </div>
+        
+            <hr>
+            <div id="mostrar-boton-registro">
+                <h1>Soy nuevo/a</h1>
+                <div class="d-grid gap-2">
+                    <button id="btn-registro" class="btn btn-dark" type="button" class="btn btn-primary">Regístrate</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-4">
+
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block javascript/jquery %}
+    <script>
+        
+        $(document).ready(function () {
+            $('#btn-registro').click(function () {
+                //$('#mostrar-boton-login').toggle('slow');
+                //$('#mostrar-boton-registro').toggle('slow');
+                $("#mostrar").load("{% url 'cuentas:auth_register_partial' %}");
+            });
+
+        });
+        
+    </script>
+
+{% endblock javascript/jquery %}

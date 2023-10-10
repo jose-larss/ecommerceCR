@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+
+        </div>
+        <div class="col-4" style="margin-top:50px">
+
+            <h1>Te damos la bienvenida</h1>
+            <div class="d-grid gap-2">
+                <button id="btn-login" class="btn btn-dark" type="button">Iniciar sesión</button>
+            </div>
+            <hr>
+    
+            <h1>Soy nuevo/a</h1>
+
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{error}}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            {% endif %}
+
+            <form action="{% url 'cuentas:auth_register' %}" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+            
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-dark">Regístrate</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-4">
+
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascript/jquery %}{% endblock javascript/jquery %}
